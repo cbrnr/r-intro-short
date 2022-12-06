@@ -1,0 +1,411 @@
+---
+title: "3 – Vectors"
+subtitle: "Introduction to R"
+author: "Clemens Brunner"
+date: 2022-12-19
+format: html
+engine: knitr
+highlight-style: github
+title-block-banner: true
+theme:
+  light: flatly
+  dark: darkly
+---
+
+## Creating vectors
+
+A vector is a collection of elements. Importantly, vectors are *atomic* data types in R – that is, a vector is the most basic data type in R, and even a single number is represented as a vector. We can use the function `c()` (combine, concatenate) to create a vector consisting of multiple elements:
+
+```{r}
+(y = c(1, 2, 3.1415, -100))
+```
+
+:::{.callout-note}
+Wrapping an assignment in parentheses is a useful shortcut to also *display* the assigned value in the console. We could re-write the previous example as follows:
+
+```r
+y = c(1, 2, 3.1415, -100)
+y
+```
+:::
+
+The function `length()` returns the number of elements in a vector:
+
+```{r}
+length(y)
+```
+
+Notice that a single number is just a vector with one element:
+
+```{r}
+a = 6
+length(a)
+```
+
+In fact, `c()` simply concatenates (flattens) all its arguments into a single vector:
+
+```{r}
+c(666, y, 666, c(23, 24))
+```
+
+In this example, note that we pass four arguments to the function: `666`, `y` (itself a vector consisting of four elements), `666`, and `c(23, 24)` (a two-element vector).
+
+
+## Types
+
+A vector is a homogenous data structure, which means that it consists of elements of the same type. We have already seen numeric vectors (where all elements are numbers), but R has several other types of vectors. In addition to numeric vectors, we will often work with logical vectors and character vectors (later on, we will also see factors and datetime vectors).
+
+Let's discuss each vector type in turn.
+
+
+### Numeric vectors
+
+Numeric vectors consist of numbers:
+
+```{r}
+c(2, 13, 15, 17)
+```
+
+The function `class()` determines the type of the argument you pass. Therefore, you can use `class()` to check the data type of a given object:
+
+```{r}
+class(c(2, 13, 15, 17))
+z = 2
+class(z)
+```
+
+
+### Logical vectors
+
+Logical vectors consist of the values `TRUE` and `FALSE` (note the all-uppercase spelling):
+
+```{r}
+class(TRUE)
+class(c(FALSE, FALSE, TRUE))
+```
+
+:::{.callout-note}
+It is possible to abbreviate `TRUE` and `FALSE` with `T` and `F`, respectively. However, it is discouraged to use these short names because it decreases readability.
+:::
+
+Logical vectors are one of the most frequently used vector types in R because they are the result of a comparison:
+
+```{r}
+x = c(0.5, 55, -10, 6)  # numeric vector
+class(x)
+x < 1  # comparison
+class(x < 1)  # logical vector
+```
+
+R supports the following comparison operators: `>`, `>=`, `<`, `<=`, `==` (equals) and `!=` (is not equal). Comparisons can also be chained (combined) with `|` (or) and `&` (and) as well as negated (inverted) with `!`. It is also possible (and useful) to group expressions with parentheses. Here are some examples:
+
+```{r}
+(3 > 5) & (4 == 4)
+(TRUE == TRUE) | (TRUE == FALSE)
+((111 >= 111) | !(TRUE)) & ((4 + 1) == 5)
+```
+
+:::{.callout-important}
+Make sure to use `==` if you want to test for equality and not `=` (which is the assignment operator).
+:::
+
+
+### Character vectors
+
+All elements of a character vector consist of strings, that is, a collection of characters, digits, and symbols. Each element of a character vector must be enclosed by single or double quotes. Here are some example character vectors:
+
+```{r}
+(s = c("What's", 'your', "name?"))
+class(s)
+class("Hello!")
+class("42")
+```
+
+Unsurprisingly, `length()` returns the number of elemens in a character vector. If you want to determine the number of characters of each element in the vector, use `nchar()`:
+
+```{r}
+length(c('Hello', 'world!'))
+nchar(c('Hello', 'world!'))
+```
+
+
+## Coercion
+
+Recall that vectors are homogenous data types (all elements have the same type). For example, all elements of a numeric vector are numbers. If we use `c()` to create a vector with different types, R automatically coerces these elements to a vector that can represent them all instead of throwing an error. This means that mixing numbers and characters results in a character vector, and mixing numbers and logicals results in a numeric vector:
+
+```{r}
+(x = c(1, 2.14, "5", 6))
+class(x)
+(y = c(1, TRUE, 2, FALSE, -7))
+class(y)
+```
+
+There are also functions that explicitly convert a vector into a desired type:
+
+- `as.numeric()`
+- `as.integer()`
+- `as.logical()`
+- `as.character()`
+
+For example, a character vector can be converted to a numeric vector if its elements can be represented (interpreted) as numbers:
+
+```{r}
+as.numeric(c("1", "2.12", "66"))
+```
+
+Wherever this is not possible, R creates a *missing value* `NA` ("Not Available"):
+
+```{r}
+as.numeric(c("1", "2.12", "X"))
+```
+
+
+## Working with vectors
+
+Of course, R can perform calculations with numeric vectors. These operations are performed *elementwise* (separately for each element):
+
+```{r}
+c(1, 2, 3, 4) * 100 + 2
+```
+
+We already know the basic arithmetic operators `+`, `-`, `*`, and `/` for addition, subtraction, multiplication, and division. Operators `^` or `**` perform exponentiation (e.g. `5**2` means five to the power of two). Integer division and remainder can be computed with `%/%` and `%%`, respectively. Some additional useful functions that compute mathematical operations include `abs()` (absolute value), `sqrt()` (square root), `log()` (logarithm), and `exp()` (exponential function).
+
+
+### Recycling
+
+Two vectors in an operation can even have different lengths. For example, R can compute the following addition with a 2-element vector and a 4-element vector:
+
+```{r}
+c(1, 2) + c(6, 7, 8, 9)
+```
+
+In this case, R repeats the elements of the shorter vector to match the length of the longer vector. In other words, this is what really happens behind the scenes:
+
+```{r}
+c(1, 2, 1, 2) + c(6, 7, 8, 9)
+```
+
+This (automatic) process is called recycling, because the shorter vector is recycled to generate a vector that has the same number of elements as the longer vector. In fact, recycling also happens in the example we saw before:
+
+```{r}
+c(1, 2, 3, 4) * 100 + 2
+```
+
+Here, we multiply a vector with four elements (`c(1, 2, 3, 4)`) with a vector with one element (`100`), and then add another vector with one element (`2`). Therefore, R recycles all shorter vectors to length four as follows:
+
+```{r}
+c(1, 2, 3, 4) * c(100, 100, 100, 100) + c(2, 2, 2, 2)
+```
+
+Another example that shows addition of a 4-element vector with a 2-element vector:
+
+```{r}
+c(1, 2, 3, 4) + c(0, 10)
+c(1, 2, 3, 4) + c(0, 10, 0, 10)
+```
+
+If recycling is not possible exactly because the length of the longer vector is not an integer multiple of the length of the shorter vector, R issues a warning (but recycling still works):
+
+```{r}
+c(1, 2, 3, 4, 5) + c(0, 10, 8)
+c(1, 2, 3, 4, 5) + c(0, 10, 8, 0, 10)
+```
+
+
+## Creating sequences
+
+Sequences of numbers are frequently needed, so R provides shortcuts to create such vectors using either `:` or the function `seq()`. In both cases, we provide start and stop values, but whereas the step size for a sequence generated by `:` is always one, `seq()` can generate number sequences with arbitrary step sizes.
+
+Here are some examples:
+
+```{r}
+1:20
+pi:10
+9:2
+seq(1, 20)
+seq(20, 1)
+seq(0, 8, by=0.5)
+seq(8, 0, by=-0.5)
+seq(0, 20, 2)  # even numbers
+seq(1, 20, 2)  # odd numbers
+seq(from=1, to=3, length.out=10)
+```
+
+The related function `rep()` creates a vector by repeating elements. For example, we can create a vector consisting of 90 zeros:
+
+```{r}
+rep(0, 90)
+```
+
+Now we can finally solve the mystery of `[1]` that we see in front of every output: the number in square brackets corresponds to the index (the position in the vector) of the element right next to it. In the example, this means that the first `0` in the first line corresponds to index 1, whereas the first `0` in the second line corresponds to index 39 (the thirty-ninth element in the vector). This is convenient to determine indexes in long vectors without having to count from the first element.
+
+The following lines show some additional usage examples of the `rep()` function:
+
+```{r}
+rep(c(0, 1, 2), times=10)
+rep(c(0, 1, 2), each=10)
+rep(c(0, 1, 2), times=c(10, 10, 10))  # identical to each=10
+```
+
+
+## Indexing
+
+Very often, we need to extract only specific values from a vector (for example the first 10 elements of a long vector). The position of an element in a vector is called its *index*. R starts counting at 1 (in contrast to many other programming languages that start counting at 0), so the first element has index 1, the second element has index 2, and so on.
+
+Therefore, to extract one element of a vector, we can use square brackets containing the desired index:
+
+```{r}
+(x = 1:10)
+x[4]  # fourth element
+```
+
+We can also index more than one element with a corresponding vector of indexes inside the square brackets:
+
+```{r}
+x[1:5]  # elements 1-5
+x[c(1, 4, 8)]  # elements 1, 4, and 8
+```
+
+Negative indexes mean "all elements *except* those corresponding to negative indexes":
+
+```{r}
+x[c(-1, -10)]
+x[-c(1, 10)]
+```
+
+Finally, logical vectors are also permitted as index vectors. Here, the result consists of all elements where the index vector is `TRUE`. This is useful because we can use comparisons (which result in logical vectors) to filter specific elements of a vector:
+
+```{r}
+x
+x > 5
+x[x > 5]
+```
+
+
+## Named vectors
+
+Optionally, individual elements of a vector can be named, which allows us to access elements not only by index (position), but also by name. We create named vectors by passing argument names and values in the function call to `c()`:
+
+```{r}
+(vect = c(a=11, b=2, c=NA))
+vect[2]
+vect["b"]
+```
+
+The function `names()` returns the names of a vector. If the vector elements are not named, it returns `NULL` (the special value R uses to denote "nothing" or "empty").
+
+```{r}
+names(vect)
+```
+
+We can also use `names()` to assign element names to an existing vector:
+
+```{r}
+x = 1:3
+names(x)
+names(x) = c("test", "value", "x")
+x
+```
+
+
+## Missing values
+
+R represents missing values as `NA` ("not available"):
+
+```{r}
+(vect = c(15, 1.12, NA, 12, NA, 33.22))
+```
+
+The function `is.na()` tests each element in a vector if it is missing or not. The result is a logical vector.
+
+```{r}
+is.na(vect)
+```
+
+:::{.callout-important}
+Finding missing values with the equality operator `==` does not work:
+
+```{r}
+vect == NA
+```
+
+We need to use `is.na()` instead.
+:::
+
+Using logical negation `!`, we can determine all elements that are *not* missing and subsequently filter out all missing values:
+
+```{r}
+!is.na(vect)
+vect[!is.na(vect)]
+```
+
+
+## Exercises
+
+### Exercise 1
+
+Calculate the area and circumference of a circle with radius 5. Use variables for these three values when calculating the results.
+
+
+### Exercise 2
+
+Create a vector `x` consisting of numbers 4, 18, -7, 16, 4, 29, 8, and -44. Then generate a vector `y` which contains the squared elements of `x`. Finally, create a vector `z` by combining/concatenating `x` and `y`. How can you determine the number of elements in `z`?
+
+
+### Exercise 3
+
+Which elements of the following vector `x` are even? Which elements are odd?
+
+```r
+x = c(44, 23, -56, 98, 99, 32, 45, 19, 22)
+```
+
+:::{.callout-note}
+When dividing even numbers by two the remainder is zero. Odd numbers have a remainder of one. Use the remainder operator `%%` to compute these results.
+:::
+
+
+### Exercise 4
+
+Create the following three vectors:
+
+- A sequence of numbers from 15 to 40.
+- A sequence of descending numbers from 80 to 60 in steps of 3.
+- A vector consisting of 77 equally-spaced numbers between 14 and 39.
+
+
+### Exercise 5
+
+Create a character vector with the following elements: the first 15 elements should be `"placebo"`, the next 15 elements should be `"group 1"`, and the last 15 elements should be `"group 2"`.
+
+
+### Exercise 6
+
+Create a vector `k` with even numbers from 0 to 40. Then use appropriate indexing to create new vectors consisting of the following subsets:
+
+- All elements of `k` except the eighth and ninth.
+- The first five elements.
+- Elements 2, 5, and 26.
+- Alle elements of `k` which are greater than 10.
+
+
+### Exercise 7
+
+Generate the following vector `t`:
+
+```r
+t = c(10, 20, NA, 30, 40)
+```
+
+Use the `mean()` function to compte the arithmetic mean. What is the result and how can you ignore the missing value?
+
+
+### Exercise 8
+
+Consider a vector consisting of six standard deviations:
+
+```r
+std = c(1, 2.22, 11.3, 7.8, 3.4, 6)
+```
+
+How can you compute a vector of variances?
