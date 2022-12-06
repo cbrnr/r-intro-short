@@ -1,6 +1,6 @@
 # A short introduction to R
 
-1. Basics
+1. [Basics](https://cbrnr.quarto.pub/r-intro-short-01/)
 2. The R Environment
 3. Vectors
 4. Tables
