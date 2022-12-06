@@ -1,0 +1,159 @@
+---
+title: "1 – Basics"
+subtitle: "Introduction to R"
+author: "Clemens Brunner"
+date: 2022-12-19
+format: html
+engine: knitr
+highlight-style: github
+title-block-banner: true
+theme:
+  light: flatly
+  dark: darkly
+---
+
+## Introduction
+
+In this workshop you will learn the basics of the statistical programming environment [R](https://www.r-project.org/). This is a course for beginners, so you do not need to be fluent in any other programming language or statistical software.
+
+We will start from scratch and learn how to set up a working R environment, including package management and related housekeeping tasks. Once you have R on your computer, we will dive into its basic data types (vectors) and learn how they can represent data. We will then discuss importing data from various file formats. Once our data is available in R, we will compute descriptive statistics and create useful plots – two essential steps in any data analysis pipeline. Finally, we will calculate correlations and compare means of two groups.
+
+Due to time contraints, we will not be able to cover more advanced topics in this course, but you will have a firm grasp of the most important concepts in R. This knowledge will enable you to study more specific topics on your own. Specifically, we will *not* cover a lot of statistical concepts, but I will point out some resources for additional reading. Also, we will *not* cover advanced programming concepts in R. In fact, we won't even talk about simple programming structures such as loops or functions, because these won't be useful until much later on (and frankly, you can do some pretty advanced data analysis in R without ever writing a single loop or function).
+
+With all that out of the way, let's get started!
+
+
+## Overview
+
+R is a statistical programming environment for data analysis and statistics. Here are some key facts about R (some of which reflect my personal opinion):
+
+- Open source (not only free as in beer but also free as in speech)
+- Cross-platform (R runs on Windows, macOS, and Linux)
+- Extremely popular for data analysis and statistics applications
+- Relatively easy to learn (at least the basics)
+- First-class vectors, matrices, tables, and lists
+- Huge number of third-party packages that provide additional functionality
+- Encourages reproducible research
+- Helpful documentation
+- Large and friendly community
+
+We interact with R by typing text commands or running scripts in the so-called *R console*. This means that performing data analysis does not involve an interactive graphical user interface where we typically perform most actions with the mouse. At first, this may sound a bit old-fashioned, but in reality it's really one of the best features of R. After all, writing R commands (and saving them in a script) makes the whole data analysis pipeline perfectly reproducible and reusable.
+
+So far we have only talked about R without seeing what the language actually looks like. Here's a sneak peak at what you will be able to understand after completing this course (gray boxes show R commands and white boxes show corresponding results returned by R):
+
+```{r}
+seq(from=pi/2, to=2*pi, by=pi/4)
+x = c(1, 18, 12, 3, 8, 22, 12, 4, 13, 21, 27, 1)
+mean(x)
+sd(x)
+set.seed(1)
+y = -0.1 * x + rnorm(12, mean=-10, sd=4)
+cor.test(x, y)
+plot(x, y, pch=20)
+```
+
+
+## Installation
+
+The [official R website](https://www.r-project.org/) is a great resource for everything related to R. In particular, you can download an R installer for your platform of choice ("Download" – "CRAN" at the top of the left column). The actual download is hidden beneath a cascade of hyperlinks, but eventually you will arrive at the installer for the selected platform. Download and install it (leave all settings at their defaults), and after a couple of seconds you have a working R installation on your computer. Note that it is usually a good idea to always use the latest version of R (4.2.2 at the time of writing this document), so you might want to check the R website for updates once in a while.
+
+R is modular and consists of a core programming language and a basic graphical user interface (GUI). Although the GUI shipped with any R installation is perfectly fine, most people prefer the alternative R GUI called [RStudio](https://www.rstudio.com/). Therefore, after installing R, you should head to the RStudio website and download and install the latest RStudio version (2022.07.1 at the time of writing).
+
+
+## First steps
+
+Let's start using R. We will use RStudio in this course, so open the start menu (on Windows) or use Spotlight (on macOS) to fire up RStudio. We will take a brief tour of the RStudio main window soon, but for now we'll just use the left part of the window called "Console". That's where we enter R commands, and R will evaluate anything we enter here (this is also called the [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), short for read–eval–print loop).
+
+### Basic arithmetic
+
+Note the `>` character in the console – this is the so-called *prompt*, which prompts us to enter an R command (and confirm with <kbd>Enter</kbd>). Let's try and see if R can do basic arithmetic (addition, subtraction, multiplication, division):
+
+```{r}
+13 + 7
+```
+
+```{r}
+1001 - 93
+```
+
+```{r}
+81 * 76
+```
+
+```{r}
+1563 / 43
+```
+
+Alright, this looks promising (ignore the fact that R prepends all output with `[1]` for now – we will return to this behavior later when we introduce vectors).
+
+:::{.callout-note}
+You don't have to type the whitespace around the operators, so `13+7` is also perfectly fine. However, it is usually a good idea to add spaces and write `13 + 7` because it greatly improves readability.
+:::
+
+
+### More advanced operations
+
+R can also compute the result of integer division and its remainder:
+
+```{r}
+1563 %/% 43
+1563 %% 43
+```
+
+Exponentiation (raising one number to the power of another) works with the `**` or `^` operators:
+
+```{r}
+16**2
+16^2
+```
+
+Computing the square root involves the `sqrt` command as follows:
+
+```{r}
+sqrt(144)
+```
+
+R has built-in mathematical constants such as $\pi$ and Euler's number $e$:
+
+```{r}
+pi
+exp(1)
+```
+
+
+### Order of operations
+
+Finally, R knows the correct order of operations and is able to deal with parentheses ([PEMDAS](https://en.wikipedia.org/wiki/Order_of_operations#Mnemonics)):
+
+```{r}
+(13 + 6) * 8 - 12**2 / (2.5 + 1.6)
+```
+
+Note that R accepts only regular parentheses (and not square or curly brackets) even when there are nested expressions:
+
+```{r}
+((13 + 6) * 8) / (12 / (2.5 + 1.6))
+```
+
+:::{.callout-note}
+Bear in mind that decimal numbers use a *point* as decimal separator and not a comma, even if you are using German as your primary computer language!
+:::
+
+
+## Exercises
+
+1. Install the latest versions of R and RStudio on your computer. Once everything is installed, start RStudio and find out how to display the R and RStudio version numbers.
+
+2. Compute the result of 4 divided by 0.4. In addition, compute the integer result and the remainder.
+
+3. Assume you have the following values: 11, 27, 15, 10, 33, 18, 25, 22, 39, and 11. Calculate the arithmetic mean using only basic arithmetic operations in a single line of code.
+
+4. Evaluate the following mathematical expression (with one line of code):
+
+  $$\frac{(5^5 - \pi) \cdot \frac{19}{3}}{\sqrt{13} + 7^{\frac{2}{3}}}$$
+
+5. What is wrong with the following code?
+
+   ```r
+   2 * 1 * PI
+   ```
