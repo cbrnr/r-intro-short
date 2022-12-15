@@ -342,70 +342,47 @@ vect[!is.na(vect)]
 
 ## Exercises
 
-### Exercise 1
+1. Calculate the area and circumference of a circle with radius 5. Use variables for these three values when calculating the results.
 
-Calculate the area and circumference of a circle with radius 5. Use variables for these three values when calculating the results.
+2. Create a vector `x` consisting of numbers 4, 18, -7, 16, 4, 29, 8, and -44. Then generate a vector `y` which contains the squared elements of `x`. Finally, create a vector `z` by combining/concatenating `x` and `y`. How can you determine the number of elements in `z`?
 
+3. Which elements of the following vector `x` are even? Which elements are odd?
 
-### Exercise 2
+   ```r
+   x = c(44, 23, -56, 98, 99, 32, 45, 19, 22)
+   ```
 
-Create a vector `x` consisting of numbers 4, 18, -7, 16, 4, 29, 8, and -44. Then generate a vector `y` which contains the squared elements of `x`. Finally, create a vector `z` by combining/concatenating `x` and `y`. How can you determine the number of elements in `z`?
+   :::{.callout-note}
+   When dividing even numbers by two the remainder is zero. Odd numbers have a remainder of one. Use the remainder operator `%%` to compute these results.
+   :::
 
+4. Create the following three vectors:
 
-### Exercise 3
+   - A sequence of numbers from 15 to 40.
+   - A sequence of descending numbers from 80 to 60 in steps of 3.
+   - A vector consisting of 77 equally-spaced numbers between 14 and 39.
 
-Which elements of the following vector `x` are even? Which elements are odd?
+5. Create a character vector with the following elements: the first 15 elements should be `"placebo"`, the next 15 elements should be `"group 1"`, and the last 15 elements should be `"group 2"`.
 
-```r
-x = c(44, 23, -56, 98, 99, 32, 45, 19, 22)
-```
+6. Create a vector `k` with even numbers from 0 to 40. Then use appropriate indexing to create new vectors consisting of the following subsets:
 
-:::{.callout-note}
-When dividing even numbers by two the remainder is zero. Odd numbers have a remainder of one. Use the remainder operator `%%` to compute these results.
-:::
+   - All elements of `k` except the eighth and ninth.
+   - The first five elements.
+   - Elements 2, 5, and 26.
+   - Alle elements of `k` which are greater than 10.
 
+7. Generate the following vector `t`:
 
-### Exercise 4
+   ```r
+   t = c(10, 20, NA, 30, 40)
+   ```
 
-Create the following three vectors:
+   Use `mean()` to compute the arithmetic mean. What is the result and how can you ignore the missing value?
 
-- A sequence of numbers from 15 to 40.
-- A sequence of descending numbers from 80 to 60 in steps of 3.
-- A vector consisting of 77 equally-spaced numbers between 14 and 39.
+8. Consider a vector consisting of six standard deviations:
 
+   ```r
+   std = c(1, 2.22, 11.3, 7.8, 3.4, 6)
+   ```
 
-### Exercise 5
-
-Create a character vector with the following elements: the first 15 elements should be `"placebo"`, the next 15 elements should be `"group 1"`, and the last 15 elements should be `"group 2"`.
-
-
-### Exercise 6
-
-Create a vector `k` with even numbers from 0 to 40. Then use appropriate indexing to create new vectors consisting of the following subsets:
-
-- All elements of `k` except the eighth and ninth.
-- The first five elements.
-- Elements 2, 5, and 26.
-- Alle elements of `k` which are greater than 10.
-
-
-### Exercise 7
-
-Generate the following vector `t`:
-
-```r
-t = c(10, 20, NA, 30, 40)
-```
-
-Use the `mean()` function to compte the arithmetic mean. What is the result and how can you ignore the missing value?
-
-
-### Exercise 8
-
-Consider a vector consisting of six standard deviations:
-
-```r
-std = c(1, 2.22, 11.3, 7.8, 3.4, 6)
-```
-
-How can you compute a vector of variances?
+   How can you compute a vector of variances?

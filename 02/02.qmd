@@ -328,42 +328,28 @@ mean(trim=0.25, x=numbers)
 
 ## Exercises
 
-## Exercise 1
+1. Install the packages `readr`, `Hmisc`, and `psych` – try using both the RStudio GUI and R commands! Determine the versions of each package. How can you uninstall/remove a package?
 
-Install the packages `readr`, `Hmisc`, and `psych` – try using both the RStudio GUI and R commands! Determine the versions of these three packages. How can you uninstall/remove a package?
+2. Show the help page for the `help()` function (two options)!
 
+3. Create a script called `my_first_script.R`. Add the following elements to your script:
 
-## Exercise 2
+   - A comment containing the text "Exercise 3"
+   - Activate the package `psych`
+   - Compute the mean of the numbers 45, 66, 37, 54, 17, and 22. Assign the result to the variable `m` – use only basic arithmetic operations (and not the function `mean()`)!
 
-Show the help page for the `help` command (two options)!
+   Feel free to insert empty lines to make your script easy to read!
 
+4. Let's assume we want to calculate the arithmetic mean of the numbers 1, 2, and 3. Having already learned about `mean()`, we want to put our knowledge to use, so we call the function as follows:
 
-## Exercise 3
+   ```r
+   mean(1, 2, 3)
+   ```
 
-Create a script called `my_first_script.R`. Add the following elements to your script:
+   What's wrong with the function call (the arithmetic mean should be 2)?
 
-- A comment containing the text "Exercise 3"
-- Activate the package `psych`
-- Compute the mean of the numbers 45, 66, 37, 54, 17, and 22. Assign the result to the variable `m` – use only basic arithmetic operations (and not the function `mean()`)!
+5. Read the documentation of `sum()` to answer the following questions:
 
-Feel free to insert empty lines to make your script easy to read!
-
-
-## Exercise 4
-
-Let's assume we want to calculate the arithmetic mean of the numbers 1, 2, and 3. Having already learned about the `mean` function, we want to put our knowledge to use, so we call the function as follows:
-
-```{r}
-mean(1, 2, 3)
-```
-
-What's wrong with the function call (the arithmetic mean should be 2)?
-
-
-### Exercise 5
-
-Read the documentation of `sum()` to answer the following questions:
-
-- How many required arguments to we need to pass when calling the function?
-- How many optional arguments does the function have?
-- What does the function call `sum()` (no arguments) do and why (compare with the function call `mean()`)?
+   - How many required arguments to we need to pass when calling the function?
+   - How many optional arguments does the function have?
+   - What does the function call `sum()` (no arguments) do and why (compare with the function call `mean()`)?

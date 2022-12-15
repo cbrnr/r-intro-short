@@ -339,6 +339,7 @@ Note that the spreadsheet is read-only, so this view cannot be used to edit valu
 1. Create a vector `u` consisting of integers from 50 to 99 and a vector `v` with integers from 0 to -49 (in descending order). Next, convert both `u` and `v` into two matrices with 10 rows each. Finally, create a new variable `r` containing both `u` and `v` concatenated horizontally (columnwise).
 
 2. Answer the following questions about the matrix `r` from the previous exercise:
+
    - What are the dimensions of `r`?
    - How many elements does `r` have in total?
    - What is the element in row 7 and column 9?
@@ -356,3 +357,12 @@ Note that the spreadsheet is read-only, so this view cannot be used to edit valu
 5. List four ways to access the first column `name` of `df_f` created in the previous exercise.
 
 6. Create a data frame `mtcars1` based on the built-in dataset `mtcars`, where `mtcars1` should only contain those rows of `mtcars` with values in column `mpg` greater than 25. Determine the number of rows for `mtcars` and `mtcars1`.
+
+7. There is one important difference between data frames and tibbles when it comes to indexing. Try to pinpoint the different behavior using the built-in `airquality` data frame and `air = as_tibble(airquality)`. Compare the results when indexing the `Ozone` column using each of these four methods:
+
+   - `[, 1]`
+   - `[, "Ozone"]`
+   - `$Ozone`
+   - `[["Ozone"]]`
+
+Which object (`data.frame` or `tibble`) is more consistent in terms of indexing?
