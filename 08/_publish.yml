@@ -1,0 +1,4 @@
+- source: 08.qmd
+  quarto-pub:
+    - id: 3392d5fc-f057-4c24-aff2-85a56da80157
+      url: 'https://quartopub.com/sites/cbrnr/r-intro-short-08'

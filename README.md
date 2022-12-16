@@ -7,7 +7,7 @@
 5. [Importing data](https://quartopub.com/sites/cbrnr/r-intro-short-05)
 6. [Descriptive statistics](https://quartopub.com/sites/cbrnr/r-intro-short-06)
 7. [Data wrangling](https://quartopub.com/sites/cbrnr/r-intro-short-07)
-8. Plots
+8. [Plots](https://quartopub.com/sites/cbrnr/r-intro-short-08)
 9. Correlation
 10. Comparing means
 11. Linear regression
