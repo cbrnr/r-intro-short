@@ -5,7 +5,7 @@
 3. [Vectors](https://cbrnr.quarto.pub/r-intro-short-03/)
 4. [Tables](https://cbrnr.quarto.pub/r-intro-short-04/)
 5. [Importing data](https://quartopub.com/sites/cbrnr/r-intro-short-05)
-6. Descriptive statistics
+6. [Descriptive statistics](https://quartopub.com/sites/cbrnr/r-intro-short-06)
 7. Plots
 8. Correlation
 9. Comparing means
