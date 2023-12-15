@@ -2,9 +2,15 @@
 title: "2 – The R Environment"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2022-12-19
-format: html
+date: 2023-12-18
+format:
+  html:
+    page-layout: full
 engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 120
 highlight-style: github
 title-block-banner: true
 theme:
@@ -28,21 +34,25 @@ We have already used the R console – that's where R is lurking in the backgrou
 
 ## Packages
 
-Packages extend the functionality of R, which ships only with a basic set of core features. As soon as you need to do something that is not included in base R, you will need to install a suitable third-party package. Fortunately, this process is pretty straightforward. Almost all additional packages are available in the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/web/packages/). Exactly two steps are required to use a third-party package:
+Packages extend the functionality of R, which ships only with a basic set of core features. As soon as you need to do something that is not included in base R, you will need to install a third-party package. Fortunately, this process is pretty straightforward. Almost all additional packages are available in the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/web/packages/). Exactly two steps are required to use a third-party package:
 
 1. Install the package (just once)
 2. Activate the package (before you can use it in the current R session)
 
-Before we discuss each step in detail, let's step back a bit. Sometimes it can be a challenge to find the right package to install. After all, if you don't know the package name, you cannot install it. Usually, a Google search eventually leads to the right package (for example, if you are looking for a package that provides linear mixed models, the search query "R linear mixed models" lists the `lme4` package among the first results, which is probably the most popular R package for these specific models). In addition, the [CRAN Task Views](https://cran.r-project.org/web/views/) provide a nice overview of a broad range of topics with relevant R packages.
+Before we discuss each step in detail, let's step back a bit. Sometimes it can be a challenge to find the right package to install. After all, if you don't know the package name, you cannot install it. Querying a search engine usually leads to the right package (for example, if you are looking for a package that provides linear mixed models, the search "R linear mixed models" lists the `lme4` package among the first results, which is probably the most popular R package for these specific models). In addition, the [CRAN Task Views](https://cran.r-project.org/web/views/) provide a nice overview of a broad range of topics with relevant R packages.
 
-Let's now learn how to *install* an R package given that we know its name. Then we will learn how to *activate* a package in the current R session.
+Let's now learn how to *install* an R package given that we know its name. After that, we will learn how to *activate* a package in the current R session.
 
 
 ### Package management in RStudio
 
 RStudio lists all installed packages in the *Packages* tab in the lower right region of the window. Each row contains the name, a short description, and the version of a package. In addition, there are also icons/links that let you browse the package website as well as uninstall the package if you don't need it anymore.
 
-Clicking on "Install" pops up a dialog window which lets you install a package from CRAN – all you need to do is enter the package name. Similarly, clicking on "Update" lets you update one or more (or even all) installed packages. It is generally a good idea to keep your packages up to date, so make sure to check for updates regularly.
+Clicking on "Install" pops up a dialog window which lets you install a package from CRAN – all you need to do is enter the package name. Similarly, clicking on "Update" lets you update one or more (or even all) installed packages.
+
+:::{.callout-tip}
+It is generally a good idea to keep your packages up to date, so make sure to check for package updates regularly.
+:::
 
 In case you want to get rid of an installed package, you can click on the tiny gray "X" icon in the rightmost column of a package.
 
@@ -73,7 +83,7 @@ install.packages("psych")
 
 Note that the package name must be enclosed in (single or double) quotes.
 
-Finally, here's the most important command that you will use over and over in your own scripts. Activating a package (e.g. `psych`) is as simple as running the following command:
+Finally, here's the most important command that you will use over and over in your code. Activating a package (e.g. `psych`) is as simple as running the following command:
 
 ```r
 library(psych)
@@ -90,7 +100,7 @@ Running R commands in the console is very convenient for exploring data and tryi
 
 However, such interactive data exploration eventually leads to a series of commands that need to be stored permanently – that's where scripts come in handy. An R script is a simple plaintext file (with file extension `.R`) consisting of R commands. Usually, each line of the script contains exactly one command. RStudio can load, edit, save, and run R scripts with its built-in editor.
 
-A script implements a reproducible analysis pipeline. This means that you can exactly reproduce all results when running the whole script (from top to bottom, line by line) in a pristine R session, even on another computer. Therefore, reproducing an analysis entails loading a script and running all lines sequentially – the "Source" button (or the related "Source with echo" button) in the editor toolbar does exactly that.
+A script implements a reproducible analysis pipeline. This means that you can exactly reproduce all results when running the whole script (from top to bottom, line by line) in a pristine R session, even on a different computer. Therefore, reproducing an analysis entails loading a script and running all lines sequentially – the "Source" button (or the related "Source with echo" button) in the editor toolbar does exactly that.
 
 In addition, you might also want to run only certain lines of the script to execute or repeat only parts of an analysis. Clicking on the "Run" button runs the current line or all selected lines.
 
@@ -127,9 +137,9 @@ The contents of the working directory (files and subdirectories) is shown in the
 
 The working directory enables R to load data by specifying only the file name (instead of the full path). Therefore, it is good practice to put scripts and data files into a common directory tree and set the working directory to point to this location before running the script.
 
-The command `setwd("path/to/working/directory")` sets the working directory to the path specified in quotes (in this example, the new working directory would be `path/to/working/directory`)[^1]. Alternatively, RStudio offers three graphical options to set the working directory:
+The command `setwd("path/to/working/directory")` sets the working directory to the path specified in quotes (in this example, the new working directory would be `path/to/working/directory`)[^1]. Alternatively, RStudio offers three shortcuts to set the working directory:
 
-[^1]: Note that paths should always use slashes `/` as separators, even on Windows (which uses backslashes `\`).
+[^1]: Note that paths should always use slashes `/` as separators, even on Windows (which normally uses backslashes `\`).
 
 1. "Session" – "Set Working Directory" (and then any of the three options).
 2. Navigate to the desired directory in the *Files* pane and click on "More" – "Set As Working Directory".
@@ -166,7 +176,7 @@ This example demonstrates the basic R syntax (language rules). First of all, the
 
 #### Comments
 
-R ignores everything after a `#` character (until the end of the line). This is how we write comments that explain our code. Do not underestimate the importance of comments – they exist to help you (or other people) understand the code long after you've written it. If nothing else, write comments for your future self. You will thank yourself later! Note that good comments explain the why and not the how (the latter should be clear by reading the code).
+R ignores everything after a `#` character (until the end of the line). This is how we write comments that explain our code. Do not underestimate the importance of comments – they exist to help you (or other people) understand the code long after you've written it. If nothing else, write comments for your future self. You will thank yourself later! Note that good comments explain the *why* and not the *how* (the latter should be clear by reading the code).
 
 
 #### Variables and objects
@@ -177,30 +187,30 @@ We can assign values to variables with the assignment operator `=`, for example 
 In addition to `=`, R has another operator for assignment written as `<-`. Both operators are exactly the same, and I recommend using `=` because this makes your code easier to read. However, many people prefer `<-`, so you will likely see this operator in other people's code.
 :::
 
-Variable names are case-sensitive (so `n` is different from `N`). Names can contain letters, digits, underscores, and dots (which most people try to avoid if possible).
+Variable names are case-sensitive (so `n` is different from `N`). Names can contain letters, digits, underscores, and dots (most people avoid dots though).
 
 
 #### Functions
 
 Informally, a function is a "mini" script that we can run by *calling* the function. In our example, we call the function `sum` using `sum(x)`.
 
-A function call consists of the function name and a pair of parentheses `()`. Inside the parentheses, we can provide arguments – additional information that the functions needs to work properly. In this example, we pass exactly one argument (the variable `x`, which contains a bunch of numbers that the function sums up). Note that even if you do not supply any arguments, you still need to include the parentheses. Functions that work without arguments include `getwd()`, `library()`, and `ls()`. Some functions also take multiple arguments, for example the function call `sum(1, 2, 3)` has three arguments (separated by commas).
+A function call consists of the function name and a pair of parentheses `()`. Inside the parentheses, we can provide arguments – additional information that the function might need to work properly. In the function call `sum(x)`, we pass exactly one argument (the variable `x`, which contains a bunch of numbers that the function sums up). Note that even if you do not supply any arguments, you still need to include the parentheses. Functions that work without arguments include `getwd()`, `library()`, and `ls()`. Some functions also take multiple arguments, for example the function call `sum(1, 2, 3)` has three arguments (separated by commas).
 
 Importantly, functions can also return a value (the result). For instance, calling `sum(1, 2, 3)` returns the value `6` as its result.
 
 :::{.callout-note}
-From now on, we write function names with `()` to make it clear that the name refers to a function. For example, `mean()` is a function which computes the mean of some numbers.
+From now on, we write function names with `()` to make it clear that the name refers to a function. For example, `mean()` is a function which computes the arithmetic mean of some numbers that have to be passed as an argument.
 :::
 
 Almost all R commands are expressions involving function calls, variables, and operators, so it is very helpful to remember these basic building blocks. Put even simpler (from [John M. Chambers, Extending R, Chapman & Hall/CRC, 2016](https://www.taylorfrancis.com/books/mono/10.1201/9781315381305/extending-john-chambers)):
 
-- Everything that exists in R is an object.
-- Everything that happens in R is a function call.
+- Everything that *exists* in R is an *object*.
+- Everything that *happens* in R is a *function call*.
 
 
 ### Documentation
 
-R comes with extensive integrated documentation (which is also available offline). RStudio displays help pages in the *Help* panel (lower right). There are two options to get help for a specific R command directly in the R console (the following example demonstrates this for the `sum()` function):
+R comes with extensive integrated documentation (which is also available offline). RStudio displays documentation in the *Help* panel (lower right). There are two options to get help for a specific R command directly in the R console (the following example demonstrates this for the `sum()` function):
 
 ```r
 help(sum)
@@ -210,7 +220,7 @@ help(sum)
 
 #### Example 1
 
-Let's inspect the help text for `sum()` more closely, because all help pages are organized in a similar way. It is a good habit to quickly skim the help text for a new function that you are about to use for the first time – this will get you started much quicker than just assuming things (that might not be true) or filling in arguments by trial and error.
+Let's inspect the documentation for `sum()` more closely, because all help pages are organized in a similar way. It is a good habit to quickly skim the help text for every new function that you are about to use for the first time – this will get you started much quicker than just assuming things (that might not be true) or filling in arguments by trial and error.
 
 The very first line contains the name of the function and the package it comes from in curly braces:
 
@@ -259,10 +269,10 @@ We learn that this function computes the arithmetic mean, and we can use it like
 mean(x, trim = 0, na.rm = FALSE, ...)
 ```
 
-The first parameter `x` is a (numeric) vector consisting of numbers of which we want to compute the arithmetic mean. The next two parameters (`trim` and `na.rm`) both have default values, so we don't need to specify values if we are happy with the defaults. The fourth parameter `...` summarizes "further arguments" that are not really explained.
+The first parameter `x` is a (numeric) vector containing the numbers we want to average. The next two parameters (`trim` and `na.rm`) both have default values, so we don't need to specify values if we are happy with the defaults. The fourth parameter `...` summarizes "further arguments" that are not really explained.
 
 :::{.callout-note}
-Function parameters and arguments are often used synonymously, but there is a difference: a parameter is formally defined in the function header, and when we call a function we pass arguments that replace parameters with specific values.
+Function parameters and arguments are often used synonymously, but there is a difference: a *parameter* is formally defined in the function header, and when we *call* a function, we pass *arguments* that replace parameters with *specific values*.
 
 For example, the `mean()` function has several parameters, and the first parameter is called `x`. When we call the function using `mean(1:10)`, we pass the argument `1:10`, which is used instead of `x` everywhere inside the function to compute the mean.
 :::
@@ -330,9 +340,11 @@ mean(trim=0.25, x=numbers)
 
 1. Install the packages `readr`, `Hmisc`, and `psych` – try using both the RStudio GUI and R commands! Determine the versions of each package. How can you uninstall/remove a package?
 
-2. Show the help page for the `help()` function (two options)!
+2. Read the documentation for the `help()` function (two options)!
 
-3. Create a script called `my_first_script.R`. Add the following elements to your script:
+3. Read the documentation for the `+` operator! Note that you need to enclose operators with backticks, i.e. `` `+` ``.
+
+4. Create a script called `my_first_script.R`. Add the following elements to your script:
 
    - A comment containing the text "Exercise 3"
    - Activate the package `psych`
@@ -340,7 +352,7 @@ mean(trim=0.25, x=numbers)
 
    Feel free to insert empty lines to make your script easy to read!
 
-4. Let's assume we want to calculate the arithmetic mean of the numbers 1, 2, and 3. Having already learned about `mean()`, we want to put our knowledge to use, so we call the function as follows:
+5. Let's assume we want to calculate the arithmetic mean of the numbers 1, 2, and 3. Having already learned about `mean()`, we want to put our knowledge to use, so we call the function as follows:
 
    ```r
    mean(1, 2, 3)
@@ -348,7 +360,7 @@ mean(trim=0.25, x=numbers)
 
    What's wrong with the function call (the arithmetic mean should be 2)?
 
-5. Read the documentation of `sum()` to answer the following questions:
+6. Read the documentation of `sum()` to answer the following questions:
 
    - How many required arguments to we need to pass when calling the function?
    - How many optional arguments does the function have?
