@@ -359,7 +359,7 @@ View(co2_tibble)  # opens a spreadsheet
 
 6. Create a data frame `mtcars1` based on the built-in dataset `mtcars`, where `mtcars1` should only contain those rows of `mtcars` with values in column `mpg` greater than 25. Determine the number of rows for `mtcars` and `mtcars1`.
 
-7. There is one important difference between data frames and tibbles when it comes to indexing. Try to pinpoint the different behavior using the built-in `airquality` data frame and `air = as_tibble(airquality)`. Compare the results when indexing the `Ozone` column using each of these four methods:
+7. There are some differences between data frames and tibbles when it comes to indexing. Try to pinpoint the different behavior using the built-in `airquality` data frame and `air = as_tibble(airquality)`. Compare the results when indexing the `Ozone` column using each of these four methods:
 
    - `[, 1]`
    - `[, "Ozone"]`
