@@ -209,19 +209,6 @@ Es sollten nur kleine bis mittelgroße Datensätze als Textdateien gespeichert w
 
 3. In der Datei [`wahl16.csv`](wahl16.csv) befinden sich die [Ergebnisse der Bundespräsidentenwahl 2016](https://www.bmi.gv.at/412/Bundespraesidentenwahlen/Bundespraesidentenwahl_2016/start.aspx#pk_05) (und zwar nach dem ersten Wahlgang mit den sechs ursprünglichen Kandidaten/Kanditatinnen). Importieren Sie diese Daten in ein Tibble namens `wahl16`und berechnen Sie die relative Gesamtanzahl an Stimmen für jede Kandidatin/jeden Kandidaten (die Funktionen `colSums()`, `rowSums()` sowie `sum()` könnten dabei hilfreich sein).
 
-4. Auf <https://covid19-dashboard.ages.at/data/CovidFaelle_Timeline.csv> sind Daten zu den täglichen Covid19-Neuinfektionen in Österreich zu finden. Importieren Sie diese Datei in R (achten Sie auf geeignete Argumente, um die Datei richtig einzulesen wie z.B. das korrekte Spaltentrennzeichen sowie Dezimaltrennzeichen)! Aus wie vielen Zeilen und Spalten besteht dieser Datensatz?
+4. In der Datei [`covid19.csv`](covid19.csv) sind Daten zu den täglichen Covid19-Neuinfektionen in Österreich zu finden. Importieren Sie diese Datei in R (achten Sie auf geeignete Argumente, um die Datei richtig einzulesen wie z.B. das korrekte Spaltentrennzeichen sowie Dezimaltrennzeichen)! Aus wie vielen Zeilen und Spalten besteht dieser Datensatz?
 
    Achten Sie besonders auf die Spalte `SiebenTageInzidenzFaelle` – diese beinhaltet Dezimalzahlen und sollte dementsprechend numerisch sein (also Typ `dbl`)!
-
-5. Das [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/) stellt viele Datensätze zur freien Verwendung zur Verfügung. Wir verwenden für diese Übung den Datensatz [Individual Household Electric Power Consumption](http://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption), und zwar die Datei [`household_power_consumption.zip`](household_power_consumption.zip). Sie müssen diese Datei nicht entpacken, sondern können diese direkt mit der Funktion `read_delim()` laden.
-
-   Die Datei beinhaltet die minütliche elektrische Leistungsaufnahme eines Haushalts in einem Zeitraum von fast vier Jahren. Insgesamt gibt es über 2 Millionen Messpunkte und 9 Variablen, welche durch Strichpunkte voneinander `;` getrennt sind. Fehlende Werte sind mit einem Fragezeichen `?` bzw. mit tatsächlich fehlenden Einträgen codiert.
-
-   Lesen Sie die Daten in ein Tibble namens `df` ein und geben Sie es am Bildschirm aus um folgende Fragen zu beantworten:
-
-   -   Wie viele Zeilen und Spalten hat das Data Frame?
-   -   Welche Spalten könnte man eventuell noch in einen passenderen Typ umwandeln (Sie müssen das aber nicht tatsächlich durchführen)?
-
-   :::{.callout-tip}
-   Es ist wichtig, dass R beim Einlesen der Daten fehlende Werte korrekt erkennt. In dieser Datei werden fehlende Werte durch `?` markiert. Stellen Sie durch Setzen des entsprechenden Argumentes der    Funktion `read_delim()` sicher, dass diese fehlenden Werte richtig eingelesen werden (und somit korrekt als `NA` interpretiert werden)! Es kommen sowohl `"?"` als auch `""` als fehlende Werte in    der Datei vor. Die korrekt importierten Daten sollten in einem Tibble mit den folgenden Spaltentypen vorhanden sein: eine Spalte `chr`, sieben Spalten `dbl` und eine Spalte `time`.
-   :::
