@@ -1,4 +1,4 @@
 - source: 03.qmd
   quarto-pub:
     - id: 4df206fc-f116-4e46-b570-2689c62e9e2c
-      url: 'https://quartopub.com/sites/cbrnr/r-intro-short-03'
+      url: 'https://cbrnr.quarto.pub/r-intro-short-03'

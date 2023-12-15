@@ -2,9 +2,15 @@
 title: "3 – Vectors"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2022-12-19
-format: html
+date: 2023-12-18
+format:
+  html:
+    page-layout: full
 engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 120
 highlight-style: github
 title-block-banner: true
 theme:
@@ -48,7 +54,7 @@ In fact, `c()` simply concatenates (flattens) all its arguments into a single ve
 c(666, y, 666, c(23, 24))
 ```
 
-In this example, note that we pass four arguments to the function: `666`, `y` (itself a vector consisting of four elements), `666`, and `c(23, 24)` (a two-element vector).
+In this example, we pass four arguments to the function: `666`, `y` (itself a vector consisting of four elements), `666`, and `c(23, 24)` (a two-element vector).
 
 
 ## Types
@@ -88,7 +94,7 @@ class(c(FALSE, FALSE, TRUE))
 It is possible to abbreviate `TRUE` and `FALSE` with `T` and `F`, respectively. However, it is discouraged to use these short names because it decreases readability.
 :::
 
-Logical vectors are one of the most frequently used vector types in R because they are the result of a comparison:
+Logical vectors are one of the most frequently used vector types in R, because they are the result of a comparison:
 
 ```{r}
 x = c(0.5, 55, -10, 6)  # numeric vector
@@ -153,7 +159,7 @@ For example, a character vector can be converted to a numeric vector if its elem
 as.numeric(c("1", "2.12", "66"))
 ```
 
-Wherever this is not possible, R creates a *missing value* `NA` ("Not Available"):
+Wherever this is not possible, R creates a *missing value* `NA` ("Not Available") and issues a warning:
 
 ```{r}
 as.numeric(c("1", "2.12", "X"))
@@ -179,7 +185,7 @@ Two vectors in an operation can even have different lengths. For example, R can 
 c(1, 2) + c(6, 7, 8, 9)
 ```
 
-In this case, R repeats the elements of the shorter vector to match the length of the longer vector. In other words, this is what really happens behind the scenes:
+Here, R repeats the elements of the shorter vector to match the length of the longer vector. In other words, this is what really happens behind the scenes:
 
 ```{r}
 c(1, 2, 1, 2) + c(6, 7, 8, 9)
@@ -191,20 +197,20 @@ This (automatic) process is called recycling, because the shorter vector is recy
 c(1, 2, 3, 4) * 100 + 2
 ```
 
-Here, we multiply a vector with four elements (`c(1, 2, 3, 4)`) with a vector with one element (`100`), and then add another vector with one element (`2`). Therefore, R recycles all shorter vectors to length four as follows:
+We multiply a vector with four elements (`c(1, 2, 3, 4)`) with a vector with one element (`100`), and then add another vector with one element (`2`). Therefore, R recycles all shorter vectors to length four as follows:
 
 ```{r}
 c(1, 2, 3, 4) * c(100, 100, 100, 100) + c(2, 2, 2, 2)
 ```
 
-Another example that shows addition of a 4-element vector with a 2-element vector:
+Here's another example that adds a 4-element vector to a 2-element vector:
 
 ```{r}
 c(1, 2, 3, 4) + c(0, 10)
 c(1, 2, 3, 4) + c(0, 10, 0, 10)
 ```
 
-If recycling is not possible exactly because the length of the longer vector is not an integer multiple of the length of the shorter vector, R issues a warning (but recycling still works):
+If recycling is not possible exactly, because the length of the longer vector is not an integer multiple of the length of the shorter vector, R issues a warning (but recycling still works):
 
 ```{r}
 c(1, 2, 3, 4, 5) + c(0, 10, 8)
@@ -225,7 +231,7 @@ pi:10
 seq(1, 20)
 seq(20, 1)
 seq(0, 8, by=0.5)
-seq(8, 0, by=-0.5)
+seq(8, 0, by=-0.5)  # note the negative step size
 seq(0, 20, 2)  # even numbers
 seq(1, 20, 2)  # odd numbers
 seq(from=1, to=3, length.out=10)
@@ -237,7 +243,7 @@ The related function `rep()` creates a vector by repeating elements. For example
 rep(0, 90)
 ```
 
-Now we can finally solve the mystery of `[1]` that we see in front of every output: the number in square brackets corresponds to the index (the position in the vector) of the element right next to it. In the example, this means that the first `0` in the first line corresponds to index 1, whereas the first `0` in the second line corresponds to index 39 (the thirty-ninth element in the vector). This is convenient to determine indexes in long vectors without having to count from the first element.
+Now we can finally solve the mystery of `[1]` that we see in front of every output: the number in square brackets corresponds to the index (the position in the vector) of the element right next to it. In the example, this means that the first `0` in the first line corresponds to index 1, whereas the first `0` in the second line corresponds to index 59 (the fifty-ninth element in the vector). This is convenient to determine indexes in long vectors without having to count from the first element.
 
 The following lines show some additional usage examples of the `rep()` function:
 
@@ -292,7 +298,7 @@ vect[2]
 vect["b"]
 ```
 
-The function `names()` returns the names of a vector. If the vector elements are not named, it returns `NULL` (the special value R uses to denote "nothing" or "empty").
+The function `names()` returns the names of a vector. If the elements are not named, it returns `NULL` (which is a special value in R to denote "nothing").
 
 ```{r}
 names(vect)
@@ -332,7 +338,7 @@ vect == NA
 We need to use `is.na()` instead.
 :::
 
-Using logical negation `!`, we can determine all elements that are *not* missing and subsequently filter out all missing values:
+Using logical negation `!`, we can determine all elements that are *not* missing and subsequently drop all missing values:
 
 ```{r}
 !is.na(vect)
@@ -353,7 +359,7 @@ vect[!is.na(vect)]
    ```
 
    :::{.callout-note}
-   When dividing even numbers by two the remainder is zero. Odd numbers have a remainder of one. Use the remainder operator `%%` to compute these results.
+   When dividing even numbers by two, the remainder is zero. Odd numbers have a remainder of one. Use the remainder operator `%%` to compute these results.
    :::
 
 4. Create the following three vectors:
