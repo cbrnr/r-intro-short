@@ -2,9 +2,15 @@
 title: "5 – Importing data"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2022-12-19
-format: html
+date: 2023-12-18
+format:
+  html:
+    page-layout: full
 engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 120
 highlight-style: github
 title-block-banner: true
 theme:
@@ -12,12 +18,20 @@ theme:
   dark: darkly
 ---
 
-## Allgemeines
+## Introduction
 
-R kann mit Daten in vielen unterschiedlichen Formaten umgehen, beispielsweise mit Excel-Tabellen oder auch SPSS-Datensätzen. Diese Formate sind allerdings proprietär und daher für das Abspeichern eigener Daten unter Umständen weniger gut geeignet. Idealerweise speichert man Daten in einem offenen und möglichst einfach aufgebauten Format ab, welches man mit einer Vielzahl an (frei verfügbaren) Programmen öffnen kann. Ein Beispiel für ein einfaches Format ist eine Textdatei, die man mit jedem beliebigen Texteditor öffnen kann.
+Data is stored in a wide variety of file formats, such as Excel spreadsheets, SPSS tables, or plain text files. R can import many different formats, which means that specialized reader functions make the data available as a data frame.
+
+Several key properties make plain text files a popular choice for storing data:
+
+- The format is simple and human-readable, which means that we can access the data by opening it with any text editor.
+- Plain text files are supported by almost every data processing tool and programming language (including R).
+- Changes can be efficiently tracked by version control systems such as Git.
+
+We will discuss importing plain text files (as well as Excel and SPSS files) into R as well as exporting data frames to plain text files in the following sections.
 
 
-## Textdateien
+## Plain text files
 
 Daten in Textdateien werden häufig mit Kommas voneinander getrennt – so kann man Werte aus mehreren Spalten einer Tabelle darstellen. Solche speziell formatierten Textdateien haben daher häufig die Endung `.csv` ("comma-separated values"). Es gibt aber auch andere Möglichkeiten, Werte (bzw. Spalten) voneinander zu trennen, z.B. mit Semikolons (Strichpunkten) oder Tabulatoren. Solche Dateien haben dann oft die Endungen `.dat` oder `.tsv` ("tab-separated values").
 
@@ -85,7 +99,7 @@ Unabhängig davon, wie Dezimaltrennzeichen in den Textdateien dargestellt werden
 :::
 
 
-## Daten aus SPSS
+## SPSS tables
 
 Sollen bereits vorhandene SPSS-Datensätze (`.sav`) importiert werden, kann man dazu die Funktion `read_sav()` aus dem Paket `haven` verwenden. Das Ergebnis ist wieder ein Tibble. Das `haven`-Paket kann übrigens auch Daten aus SAS und Stata importieren. Das folgende Beispiel verwendet wieder dieselben Daten, dieses Mal aber in der Datei [`lecturer.sav`](lecturer.sav):
 
@@ -95,7 +109,7 @@ df = read_sav("lecturer.sav")
 ```
 
 
-## Daten aus Excel
+## Excel spreadsheets
 
 Wenn Daten als Excel-Datei (Endung `.xlsx` oder `.xls`) vorliegen, wie in unserem Beispiel [`lecturer.xlsx`](lecturer.xlsx) verwendet man zum Einlesen die Funktion `read_excel()` aus dem Paket `readxl`. Da dieses Paket Teil des Tidyverse ist, bekommt man auch hier ein Tibble zurückgeliefert:
 
@@ -105,7 +119,7 @@ df = read_excel("lecturer.xlsx")
 ```
 
 
-## Importieren mit RStudio
+## Importing with RStudio
 
 Mit RStudio kann man Daten in vielen Formaten auch mit einem grafischen Dialog importieren. Praktischerweise bekommt man immer den dazugehörigen R-Code mitgeliefert, welcher die Daten korrekt importiert – diesen Code kann man dann in eigenen Scripts verwenden.
 
@@ -114,7 +128,7 @@ Dazu klickt man in der *Files*-Ansicht rechts unten auf die gewünschte Datei un
 ![](import.png)
 
 
-## Daten aufbereiten
+## Preprocessing data
 
 In welchem Dateiformat die Daten auch immer vorliegen, schlussendlich landen sie in einem Data Frame (oder Tibble), welches wir dann in R weiterverwenden können. In den allermeisten Fällen wird man das Data Frame noch aufbereiten müssen, damit jede Spalte auch wirklich im gewünschten Format vorliegt. Sehen wir uns das anhand unserer Beispieldaten an:
 
@@ -126,7 +140,7 @@ In welchem Dateiformat die Daten auch immer vorliegen, schlussendlich landen sie
 Man erkennt, dass die numerischen Werte korrekt als Zahlen erkannt wurden (die Abkürzung `<dbl>` bedeutet "double" und entspricht Kommazahlen, d.h. einem numerischen Vektor). Allerdings besitzt die dritte Spalte `job` lediglich zwei Werte, welche eigentlich zwei verschiedene Berufe repräsentieren (`1` steht für den Beruf "Lecturer", `2` für den Beruf "Student"). Hier wäre eine kategorische Spalte (ein Faktor, dazu gleich mehr) besser geeignet als eine numerische. Die erste Spalte `name` wurde korrekt als `chr` (Character-Vektor) erkannt. Auch die zweite Spalte `birth_date` wurde als Charakter-Vektor erkannt, aber es gibt in R einen eigenen Datentyp für Datumswerte (was u.a. das Rechnen mit diesen Werten ermöglicht).
 
 
-### Faktoren
+### Factors
 
 Kategorische Variablen, d.h. Variablen die nur eine bestimmte Anzahl an Werten annehmen können, werden in R mit dem Typ `factor` dargestellt. Die Funktion `factor()` kann einen entsprechenden Vektor erzeugen. Standardmäßig werden nicht geordnete (also *nominale*) Faktoren erzeugt. Setzt man das Argument `ordered=TRUE`, kann man auch einen geordneten Faktor (also eine *ordinale* Variable) erzeugen.
 
@@ -150,7 +164,7 @@ class(df$job)
 ```
 
 
-### Datumswerte
+### Datetime
 
 Für Datumswerte gibt es in R ebenfalls einen eigenen Datentyp, der das Rechnen mit solchen Werten erleichtert. Die Funktion `as.Date()` wandelt eine Datumsangabe in Textform in diesen speziellen Typ um. Anzugeben ist hier insbesondere das Argument `format`, welches das Format der vorliegenden Datumswerte spezifiziert (d.h. man beschreibt damit, wie die Datumswerte ursprünglich aussehen).
 
@@ -178,7 +192,7 @@ class(dates)
 Die Kürzel `%d`, `%m`, `%y` und noch viele weitere sind in der Hilfe von `as.Date()` bzw. eigentlich `strptime()` beschrieben – machen Sie sich daher vor allem mit letzterer vertraut (`?strptime`), denn diese Kürzel muss man sich nicht auswendig merken.
 
 
-## Daten speichern
+## Exporting data
 
 Wenn man ein bestehendes Data Frame oder Tibble in eine Datei speichern möchte, geht das am einfachsten mit der Funktion `write_delim()` (bzw. `write_csv()` und `write_tsv()`) aus dem `readr`-Paket. Dies funktioniert prinzipiell ganz analog zu den oben beschriebenen Lesefunktionen, nur gibt man hier sowohl das zu speichernde Data Frame als auch den Dateinamen an.
 
@@ -187,7 +201,7 @@ Es sollten nur kleine bis mittelgroße Datensätze als Textdateien gespeichert w
 :::
 
 
-## Übungen
+## Exercises
 
 1. Sehen Sie sich die Hilfe zur Funktion `read_delim()` aus dem `readr`-Paket an. Welches Argument setzt das Trennzeichen der Spalten? Welches Argument setzt das Dezimaltrennzeichen? Mit welchem Argument können Sie das Zeichen für fehlende Werte festlegen?
 
