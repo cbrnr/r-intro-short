@@ -2,9 +2,15 @@
 title: "6 – Descriptive statistics"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2022-12-19
-format: html
+date: 2023-12-18
+format:
+  html:
+    page-layout: full
 engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 120
 highlight-style: github
 title-block-banner: true
 theme:
@@ -12,7 +18,7 @@ theme:
   dark: darkly
 ---
 
-## Allgemeines
+## Introduction
 
 Nachdem man eine Datei korrekt importiert hat (d.h. wenn die Daten in einem Data Frame bzw. Tibble vorhanden sind und alle Spalten den passenden Datentyp haben), kann man mit der statistischen Analyse beginnen. Der erste Schritt dabei ist meist, sich mit deskriptiven Statistiken eine Beschreibung der vorhandenen Daten zu erzeugen.
 
@@ -70,7 +76,7 @@ sapply(df[, -c(1, 2)], sd)
 Es gibt aber auch spezielle Funktionen, welche direkt *mehrere* statistische Kenngrößen für alle Spalten eines Data Frames berechnen. Im Folgenden gehen wir näher auf vier dieser Funktionen ein, nämlich `summary()`, `describe()` und `stat.desc()`. Nur `summary()` ist standardmäßig bei R dabei, die anderen zwei Funktionen erfordern die Installation von zusätzlichen Paketen.
 
 
-### Die Funktion `summary()`
+### The `summary()` function
 
 Die Funktion `summary()` liefert eine geeignete Zusammenfassung für jede Spalte eines Data Frames (Tibbles). Numerische Spalten sowie Datumsspalten werden mit sechs Werten beschrieben: Minimum, 1. Quartil, 2. Quartil (Median), 3. Quartil, Maximum sowie Mittelwert. Für Faktoren werden die Stufen sowie die Anzahl an Fällen pro Stufe aufgelistet.
 
@@ -81,7 +87,7 @@ summary(df)
 Auch bei anderen Objekten als Data Frames liefert `summary()` oft eine sinnvolle kurze Beschreibung.
 
 
-### Die Funktion `describe()`
+### The `describe()` function
 
 Eine weitere Möglichkeit, noch mehr statistische Kenngrößen für numerische Spalten auszugeben, bietet die Funktion `describe()` aus dem `psych`-Paket. Nicht-numerische Spalten werden hier nicht vernünftig zusammengefasst, deshalb sollte man der Funktion nur numerische Spalten übergeben.
 
@@ -103,7 +109,7 @@ describeBy(df[, c("friends", "alcohol", "income", "neurotic")], df$job)
 Das erste Argument ist das zu beschreibende Data Frame, und das zweite Argument ist die Spalte, nach der gruppiert werden soll (üblicherweise ein Faktor).
 
 
-### Die Funktion `stat.desc()`
+### The `stat.desc()` function
 
 Das Paket `pastecs` beinhaltet die Funktion `stat.desc()` zur Beschreibung von Daten. Mit der Funktion `round()` sollte man hier außerdem einstellen, wie viele Kommastellen ausgegeben werden sollen, da die Ausgabe der Funktion sonst relativ unübersichtlich ist. Wenn das Argument `norm=TRUE` gesetzt wird, werden für alle Spalten Tests auf Normalverteilung durchgeführt.
 
@@ -116,7 +122,7 @@ round(
 ```
 
 
-### Gruppieren mit `by()`
+### Grouping with `by()`
 
 Für die Funktion `stat.desc()` gibt es keine direkte Variante für gruppierte Daten (so wie `describeBy()` für `describe()`). Es gibt aber in R die generische Funktion `by()`, welche beliebige Funktionen auf gruppierte Daten anwendet. Das erste Argument ist hier wie üblich der Datensatz, das zweite Argument ist die Gruppierungsspalte, und das dritte Argument ist die Funktion, die auf die gruppierten Daten angewendet werden soll.
 
@@ -153,7 +159,7 @@ by(df$friends, df$job, mean)
 ```
 
 
-## Test auf Normalverteilung
+## Testing for normality
 
 Die Funktion `stat.desc()` liefert bereits das Ergebnis des [Shapiro-Wilk-Tests](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test) auf Normalverteilung (die Einträge `normtest.W` und `normtest.p` enthalten den Wert der Teststatistik bzw. die Signifikanz). Wenn `normtest.p` signifikant ist (z.B. kleiner als 0.05), dann kann man die Nullhypothese der Normalverteilung verwerfen. Man kann den Shapiro-Wilk-Test auch direkt mit der Funktion `shapiro.test()` aufrufen:
 
@@ -176,7 +182,7 @@ ks.test(df$income, "pnorm", mean(df$income), sd(df$income))
 Da die Stichprobengröße in unserem Beispiel nur sehr klein ist, lassen sich aber ohnehin keine vernünftigen Aussagen über die Verteilung der Daten treffen.
 
 
-## Test auf Varianzhomogenität
+## Testing for homogeneity of variance
 
 Der Levene-Test prüft auf Gleichheit der Varianzen (Homoskedastizität) von zwei oder mehr Gruppen. Die Nullhypothese ist, dass die Varianzen in allen Gruppen gleich sind. In R führt man den Test mit der Funktion `leveneTest()` aus dem Paket `car` durch. Dazu sehen wir uns die Beispieldaten `Moore` an, welche mit dem Paket `car` automatisch geladen werden.
 
@@ -197,9 +203,9 @@ leveneTest(Moore$conformity, Moore$fcategory)
 In diesem Beispiel kann die Nullhypothese der Varianzgleichheit der Variable `conformity` über die Gruppen in `fcategory` also nicht verworfen werden, da der *p*-Wert (hier als `Pr(>F)` bezeichnet) mit 0.9551 extrem groß ist.
 
 
-## Übungen
+## Exercises
 
-1. Berechnen Sie statistische Kenngrößen wie Mittelwert, Median, Minimum und Maximum für die vier numerischen Variablen `Global_active_power`, `Global_reactive_power`, `Voltage` und `Global_intensity` aus den Daten die Sie in der vorigen Einheit bereits importiert haben ([Individual Household Electric Power Consumption](http://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption)).
+1. Berechnen Sie statistische Kenngrößen wie Mittelwert, Median, Minimum und Maximum für die vier numerischen Variablen `Global_active_power`, `Global_reactive_power`, `Voltage` und `Global_intensity` aus den Daten ([Individual Household Electric Power Consumption](https://archive.ics.uci.edu/static/public/235/individual+household+electric+power+consumption.zip)).
 
    - Berechnen Sie die Kenngrößen mit der Funktion `sapply()`.
    - Berechnen Sie die Kenngrößen mit der Funktion `summary()`.
