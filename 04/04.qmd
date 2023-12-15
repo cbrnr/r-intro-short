@@ -2,9 +2,15 @@
 title: "4 – Tables"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2022-12-19
-format: html
+date: 2023-12-18
+format:
+  html:
+    page-layout: full
 engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 120
 highlight-style: github
 title-block-banner: true
 theme:
@@ -14,9 +20,7 @@ theme:
 
 ## Introduction
 
-Vectors represent one-dimensional data such as a sequence of numbers. In practice, data is often available as a table consisting of two dimensions (rows and columns). R features two data types suitable to represent tabular data: `matrix` (or more generally `array`) and `data.frame`. Whereas a `matrix` is basically just a slightly enhanced vector (remember that all elements must have the same data type), data frames are more versatile because they can hold columns with different data types.
-
-Let's start with matrices (the plural of matrix).
+Vectors represent one-dimensional data such as a sequence of numbers. In practice, data is often available as a table consisting of two dimensions (rows and columns). R features two data types suitable to represent tabular data: `matrix` (or more generally `array`) and `data.frame`. Whereas a `matrix` is basically just a slightly enhanced vector (remember that all elements must have the same data type), data frames are more versatile, because they can hold columns with different data types.
 
 
 ## Matrix
@@ -61,7 +65,7 @@ matrix(1:20, 4, 5, byrow=TRUE)
 ```
 
 :::{.callout-note}
-A `matrix` is an `array` with two dimensions. We could also create arrays with an arbitrary number of dimensions, but these are rarely needed in statistical data analysis pipelines.
+A `matrix` is an `array` with two dimensions. We could also create arrays with an arbitrary number of dimensions, but these are rarely needed in statistical data analysis.
 :::
 
 
@@ -78,7 +82,7 @@ m
 
 ### Indexing
 
-Accessing individual elements of a matrix works just like with vectors. However, because matrices consist of rows and columns, we need to provide *two* indices (separated by a comma) inside the square brackets: a row index and a column index.
+Accessing individual elements of a matrix works just like with vectors. However, because matrices consist of rows and columns, we need to provide *two* indices (separated by a comma) inside the square brackets: a *row* index and a *column* index.
 
 Either index can also be omitted, which is a concise way to access an entire row (when omitting the column index) or an entire column (when omitting the row index). Here are some examples:
 
@@ -116,12 +120,12 @@ rowMeans(m)
 colMeans(m)
 ```
 
-A matrix is most useful for purely numerical data. In practice, we often need to deal with non-numerical data such as categorical variables. Since matrices are vectors, they can only consist of elements with the same data type. Therefore, we cannot use them to represent heterogeneous data consisting of columns with different data types.
+A matrix is most useful for purely numerical data. Since matrices are vectors, they can only accommodate elements of the same data type. In practice, we often need to deal with variables of different types, and this is where data frames really shine.
 
 
 ## Data frames
 
-Like matrices, data frames are two-dimensional data structures consisting of rows and columns. In contrast to a matrix, a data frame can contain columns with different data types. For example, a data frame can consist of a mixture of numerical columns, character columns, and so on. We can think of a data frame as a collection of columns, where each column is represented by a vector.
+Like matrices, data frames are two-dimensional data structures consisting of rows and columns. In contrast to a matrix, a data frame can contain columns of different data types. For example, a data frame can consist of a numerical columns, character columns, categorical columns, and so on. We can think of a data frame as a collection of columns, where each column is represented by a vector.
 
 :::{.callout-note}
 Technically, data frames are lists of vectors, where each vector corresponds to a column. We will not cover lists in this course and focus only on data frames instead.
@@ -130,7 +134,7 @@ Technically, data frames are lists of vectors, where each vector corresponds to 
 
 ### Creating data frames
 
-The function `data.frame()` creates a data frame from a vectors, which are usually passed as named arguments as follows:
+The function `data.frame()` creates a data frame from a set of vectors, which are usually passed as named arguments as follows:
 
 ```{r}
 data.frame(x=1:5, id=c("X", "c1", "V", "RR", "7G"), value=c(12, 18, 19, 3, 8))
@@ -152,15 +156,10 @@ colnames(df) = c("patient", "age", "weight", "bp", "rating", "test")
 df
 ```
 
-Although `rownames()` works with data frames, renaming rows is rarely ever needed and should be avoided. The default sequential row names are perfectly fine for almost all use cases, so let's restore them here:
-
-```{r}
-rownames(df) = 1:4
-df
-```
+Although `rownames()` works with data frames, renaming rows is rarely ever needed and should be avoided.
 
 
-## Printing data frames
+### Printing data frames
 
 The three functions `str()`, `head()`, and `tail()` are essential for getting a quick overview of a data frame. In particular, `str()` summarizes the structure of an object:
 
@@ -174,7 +173,7 @@ df = data.frame(
 str(df)
 ```
 
-:::{.callout-tip}
+:::{.callout-note}
 In the previous example, we created a data frame and used line breaks for better readability. If a command gets too long, consider inserting line breaks at suitable locations (such as after each argument).
 :::
 
@@ -188,6 +187,10 @@ str(l)
 head(l)
 tail(l, n=4)
 ```
+
+:::{.callout-tip}
+The `View()` function will show the entire data frame in a spreadsheet. This is very convenient, but note that this view is read-only! 
+:::
 
 
 ### Indexing
@@ -220,7 +223,7 @@ df
 ```
 
 :::{.callout-tip}
-We already know that under the hood, a data frame is a list of vectors. Therefore, as an alternative to the `$` syntax we can also access individual list elements (columns) as follows (note the double square brackets):
+We can also access individual columnsas follows (note the double square brackets):
 
 ```{r}
 df[["patient"]]
@@ -258,7 +261,7 @@ df[1:2, c(1, 3:4)]
 
 ## Tibbles
 
-Data frames are one of the most widely used data types in R. However, getting a quick and clear overview of their contents can be cumbersome for two reasons. First, R prints way too many rows – usually much more rows than would fit comfortably in the R console. The same is true if a data frame has many columns, R will usually print all columns even if they do not fit within the width of the R console.
+Data frames are one of the most widely used data types in R. However, getting a quick and clear overview of their contents can be cumbersome for two reasons. First, R prints too many data frame rows, which makes it difficult to get an overview of the data. The same is true if a data frame has many columns, R will usually print all columns even if they do not fit within the width of the R console.
 
 :::{.callout-tip}
 To illustrate the problem with displaying a data frame with many rows, try displaying a data frame with 2000 rows and 5 columns:
@@ -274,9 +277,9 @@ data.frame(matrix(1:10000, 100, 100))
 ```
 :::
 
-Another minor annoyance with data frames is that column types are only displayed when explicitly calling `str()` – they are not shown in the representation of the data frame.
+Another minor annoyance with data frames is that column types are only displayed when explicitly calling `str()` – they are not shown in the normal representation of the data frame.
 
-The `tibble` package addresses these (and other) issues by providing an "extended" data frame type – the so-called `tibble`. A tibble is a drop-in replacement for a data frame, which means that it can be used everywhere a data frame is expected (because it basically is a data frame with some special behavior).
+The `tibble` package addresses these (and other) issues by providing an "extended" data frame type – the so-called `tibble`. A tibble is a drop-in replacement for a data frame, which means that it can be used everywhere a data frame is expected (because it basically *is* a data frame with some special behavior).
 
 In contrast to data frames, tibbles are not part of base R, so we need to install and activate the `tibble` package:
 
@@ -325,18 +328,16 @@ If you want to view all (or any other number of) rows of a tibble, use `print()`
 print(co2_tibble, n=Inf)  # n=Inf shows all rows
 ```
 
-Finally, `View()` creates a spreadsheet-like view of the data, which is useful for interactive exploration:
+As we have already discussed previously, `View()` creates a spreadsheet-like view of the data, which is useful for interactive exploration:
 
 ```r
 View(co2_tibble)  # opens a spreadsheet
 ```
 
-Note that the spreadsheet is read-only, so this view cannot be used to edit values of a data frame.
-
 
 ## Exercises
 
-1. Create a vector `u` consisting of integers from 50 to 99 and a vector `v` with integers from 0 to -49 (in descending order). Next, convert both `u` and `v` into two matrices with 10 rows each. Finally, create a new variable `r` containing both `u` and `v` concatenated horizontally (columnwise).
+1. Create a vector `u` consisting of integers from 50 to 99 and a vector `v` with integers from 0 to –49 (in descending order). Next, convert both `u` and `v` into two matrices with 10 rows each. Finally, create a new variable `r` containing both `u` and `v` concatenated horizontally (columnwise).
 
 2. Answer the following questions about the matrix `r` from the previous exercise:
 
@@ -365,4 +366,8 @@ Note that the spreadsheet is read-only, so this view cannot be used to edit valu
    - `$Ozone`
    - `[["Ozone"]]`
 
-Which object (`data.frame` or `tibble`) is more consistent in terms of indexing?
+   Which object (`data.frame` or `tibble`) is more consistent in terms of indexing?
+
+   :::{.callout-tip}
+   A comprehensive overview of data frame subsetting operations is available [here](https://cbrnr.github.io/blog/r-dataframe-subsetting/).
+   :::
