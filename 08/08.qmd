@@ -2,9 +2,15 @@
 title: "8 – Plots"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2022-12-19
-format: html
+date: 2023-12-18
+format:
+  html:
+    page-layout: full
 engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 120
 highlight-style: github
 title-block-banner: true
 theme:
