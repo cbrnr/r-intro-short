@@ -2,7 +2,7 @@
 title: "3 – Vectors"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2023-12-18
+date: 2024-12-16
 format:
   html:
     page-layout: full
@@ -127,7 +127,7 @@ class("Hello!")
 class("42")
 ```
 
-Unsurprisingly, `length()` returns the number of elemens in a character vector. If you want to determine the number of characters of each element in the vector, use `nchar()`:
+Unsurprisingly, `length()` returns the number of elements in a character vector. If you want to determine the number of characters of each element in the vector, use `nchar()`:
 
 ```{r}
 length(c('Hello', 'world!'))

@@ -2,7 +2,7 @@
 title: "2 – The R Environment"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2023-12-18
+date: 2024-12-16
 format:
   html:
     page-layout: full

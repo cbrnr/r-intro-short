@@ -2,7 +2,7 @@
 title: "4 – Tables"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2023-12-18
+date: 2024-12-16
 format:
   html:
     page-layout: full
@@ -99,7 +99,7 @@ m[m[, "A"] > 2,]  # rows where column A > 2
 
 ### Coercion
 
-What happens if we try to add a new column of type `character` to an existing (numeric) matrix? Just like with vectors, R coerces all matrix elements to the type that can accomodate both numbers and characters:
+What happens if we try to add a new column of type `character` to an existing (numeric) matrix? Just like with vectors, R coerces all matrix elements to the type that can accommodate both numbers and characters:
 
 ```{r}
 subjects = c("Joe", "Tracy", "Steven", "Chloe")
@@ -223,7 +223,7 @@ df
 ```
 
 :::{.callout-tip}
-We can also access individual columnsas follows (note the double square brackets):
+We can also access individual columns as follows (note the double square brackets):
 
 ```{r}
 df[["patient"]]

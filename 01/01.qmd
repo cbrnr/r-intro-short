@@ -2,7 +2,7 @@
 title: "1 – Basics"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2023-12-18
+date: 2024-12-16
 format:
   html:
     page-layout: full
@@ -24,7 +24,7 @@ In this workshop, you will learn the basics of the statistical programming envir
 
 We will start from scratch and learn how to set up a working R environment, including package management and related housekeeping tasks. Once you have installed R on your computer, we will dive into its basic data types and learn how they can represent data. We will then discuss importing data from various file formats. Once our data is available in R, we will compute descriptive statistics and create useful plots – two essential steps in any data analysis pipeline.
 
-Due to time contraints, we will not be able to cover more advanced topics in this course, but you will have a good understanding of the foundations of R. This knowledge will enable you to study more specific topics on your own. Specifically, we will *not* cover a lot of statistical topics, but I will point out some resources for additional reading. Also, we will *not* cover advanced programming concepts in R. In fact, we won't even discuss simple programming structures such as loops or functions, because these won't be useful until much later on (and frankly, you can do some pretty advanced data analysis in R without ever writing a single loop or function).
+Due to time constraints, we will not be able to cover more advanced topics in this course, but you will have a good understanding of the foundations of R. This knowledge will enable you to study more specific topics on your own. Specifically, we will *not* cover a lot of statistical topics, but I will point out some resources for additional reading. Also, we will *not* cover advanced programming concepts in R. In fact, we won't even discuss simple programming structures such as loops or functions, because these won't be useful until much later on (and frankly, you can do some pretty advanced data analysis in R without ever writing a single loop or function).
 
 With all that out of the way, let's get started!
 
