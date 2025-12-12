@@ -2,7 +2,7 @@
 title: "7 – Data wrangling"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2024-12-16
+date: 2025-12-15
 format:
   html:
     page-layout: full
@@ -113,7 +113,7 @@ We have already learned that we can filter specific rows by indexing. With the f
 df[df$sex == "f",]
 ```
 
-This notation is relatively cumbersome for data frames, especially because the underlying data frame `df` has to be written twice. Fortunately, there is a more intuitive alternative using the `subset()` function. This function can create subsets of existing vectors or data frames. In the case of a data frame, this means that you can select a subset of rows and/or columns.
+This notation is relatively cumbersome, especially because the underlying data frame `df` has to be written twice. Fortunately, there is a more intuitive alternative using the `subset()` function. This function can create subsets of existing vectors or data frames. In the case of a data frame, this means that you can select a subset of rows and/or columns.
 
 Let's start with selecting rows (this operation is also called "filtering"). You pass the original data frame as the first argument to the `subset()` function. The second argument (called `subset`, not to be confused with the function name) then determines which rows should be selected (filtered). The example above can be rewritten as follows:
 
