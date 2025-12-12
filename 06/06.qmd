@@ -2,7 +2,7 @@
 title: "6 – Descriptive statistics"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2024-12-16
+date: 2025-12-15
 format:
   html:
     page-layout: full
@@ -20,7 +20,7 @@ theme:
 
 ## Introduction
 
-After importing a file correctly (i.e., when the data is available in a data frame or tibble and all columns have a suitable data type), you can start with the statistical analysis. The first step is usually to create an overview of the available data using descriptive statistics.
+After importing a file correctly (i.e., the data is available in a data frame or tibble and all columns have a suitable data type), you can start with the statistical analysis. The first step is usually to create an overview of the available data using descriptive statistics.
 
 As an example, we import the file [`lecturer.csv`](lecturer.csv) from the previous chapter:
 
@@ -38,7 +38,7 @@ df$job = factor(df$job, levels=c(1, 2), labels=c("Lecturer", "Student"))
 df
 ```
 
-We no longer need the `name` column for our subsequent considerations, so we remove it:
+We no longer need the `name` column for our subsequent considerations, so we drop it:
 
 ```{r}
 df$name = NULL
@@ -50,7 +50,7 @@ R provides a number of functions that calculate summary statistics for a variabl
 mean(df$friends)
 ```
 
-For factors, we might be interested in knowing how many levels they contain. Also, for numerical or text vectors with multiple occurrences of values, it is sometimes useful to find out the unique values. For this purpose, R providers the `unique()` function, which returns the unique elements of a vector:
+For factors, we might be interested in knowing how many levels they contain. Also, for numerical or text vectors with multiple occurrences of values, it is sometimes useful to find out the unique values. For this purpose, R provides the `unique()` function, which returns the unique elements of a vector:
 
 ```{r}
 unique(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2))
@@ -70,7 +70,7 @@ sapply(df[, -c(1, 2)], mean)
 The first argument of `sapply()` is the data frame, and the second argument is a function that should be applied to each column. Here, we provide a subset of the data frame `df` that excludes the first two columns (the `name` and `birth_date` columns). The function `mean()` is then applied to each column of this subset, resulting in a vector with column means.
 
 :::{.callout-tip}
-Alternatively, you can use the `colMeans()` to calculate column means.
+Alternatively, you could use `colMeans()` to calculate column means.
 :::
 
 We can apply the same principle to calculate other summary statistics for each column, such as the standard deviation:
@@ -84,7 +84,7 @@ However, there are also functions that can deal with data frames directly to cal
 
 ### The `summary()` function
 
-The `summary()` function provides a suitable summary for each column of a data frame (or tibble). Numerical columns and date columns are described with six values:
+The `summary()` function provides a useful summary for each column of a data frame. Numerical columns and date columns are described with six values:
 
 1. Minimum
 2. First quartile (25th percentile)
@@ -99,7 +99,7 @@ For factors, the summary includes the levels and the number of cases per level.
 summary(df)
 ```
 
-The `summary()` function also works for other column types and often provides a useful short description.
+The `summary()` function also works for other column types and often provides a useful short description. Noteably, it reports the number of missing values per column (if any).
 
 
 ### The `describe()` function
@@ -112,7 +112,7 @@ describe(df[, 3:6])
 ```
 
 :::{.callout-note}
-We can use functions from packages without activating them. To do this, we have to prefix the package name followed by `::`. In the previous example, we could therefore omit `library(psych)` and still use the function with `psych::describe()`.
+We can use functions from packages without activating the package. To do this, we have to prefix the package name followed by `::`. In the previous example, we could therefore omit `library(psych)` and still use the function with `psych::describe()`. In either case, the package must be installed on your system.
 :::
 
 The related `describeBy()` function provides summary statistics for individual groups (such as for individual levels of the factor `df$job`):
@@ -171,7 +171,7 @@ If you want to avoid the output of numbers in scientific notation as much as pos
 options(scipen=100)
 ```
 
-However, this does not guarantee that all numbers are displayed in decimal notation. Another option is to display numbers as normal decimal numbers using `format()`. This always results in a character vector, but does not require changing an option:
+However, this does not guarantee that all numbers will be displayed in decimal notation. Another option is to display numbers as normal decimal numbers using `format()`. This always results in a character vector, but does not require changing an option:
 
 ```{r}
 format(1e-15, scientific=FALSE)
@@ -203,7 +203,7 @@ by(df$friends, df$job, mean)
 
 ## Test for normality
 
-The `stat.desc()` function already provides the result of the [Shapiro-Wilk test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test) for normality (the entries `normtest.W` and `normtest.p` contain the the test statistic and the significance, respectively). If `normtest.p` is significant (e.g., less than 0.05), the null hypothesis of normality can be rejected. You can also call the Shapiro-Wilk test directly with the `shapiro.test()` function:
+The `stat.desc()` function already provides the result of the [Shapiro-Wilk test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test) for normality (the entries `normtest.W` and `normtest.p` contain the test statistic and the significance, respectively). If `normtest.p` is significant (e.g., less than 0.05), the null hypothesis of normality can be rejected. You can also call the Shapiro-Wilk test directly with the `shapiro.test()` function:
 
 ```{r}
 shapiro.test(df$income)
