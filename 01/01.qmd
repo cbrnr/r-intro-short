@@ -2,7 +2,7 @@
 title: "1 – Basics"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2024-12-16
+date: 2025-12-15
 format:
   html:
     page-layout: full
@@ -22,28 +22,28 @@ theme:
 
 In this workshop, you will learn the basics of the statistical programming environment [R](https://www.r-project.org/). This is a course for beginners, so you do not need to be fluent in any other programming language or statistical software.
 
-We will start from scratch and learn how to set up a working R environment, including package management and related housekeeping tasks. Once you have installed R on your computer, we will dive into its basic data types and learn how they can represent data. We will then discuss importing data from various file formats. Once our data is available in R, we will compute descriptive statistics and create useful plots – two essential steps in any data analysis pipeline.
+We will start from scratch and learn how to set up a working R environment, including package management and related housekeeping tasks. Once you have installed R on your computer, we will dive into its basic data types and learn how they can represent common data structures. We will then discuss importing data from various file formats. Once our data is available in R, we will compute descriptive statistics and create useful plots – two essential steps in any data analysis pipeline.
 
-Due to time constraints, we will not be able to cover more advanced topics in this course, but you will have a good understanding of the foundations of R. This knowledge will enable you to study more specific topics on your own. Specifically, we will *not* cover a lot of statistical topics, but I will point out some resources for additional reading. Also, we will *not* cover advanced programming concepts in R. In fact, we won't even discuss simple programming structures such as loops or functions, because these won't be useful until much later on (and frankly, you can do some pretty advanced data analysis in R without ever writing a single loop or function).
+Due to time constraints, we will not be able to cover more advanced topics in this course, but you will have a good understanding of the foundations of R. This knowledge will enable you to study more specific topics on your own. Specifically, we will *not* cover a lot of statistical topics, but I will point out some resources for additional reading. We will *not* cover advanced programming concepts in R either. In fact, we won't even discuss simple programming structures such as loops or functions, because these won't be useful until much later on (and frankly, you can do some pretty advanced data analysis in R without ever writing a single loop or function).
 
 With all that out of the way, let's get started!
 
 
 ## Overview
 
-R is a statistical programming environment for data analysis and statistics. Here are some key facts about R (some of which reflect my personal opinion):
+R is a programming environment for data analysis and statistics. Here are some key facts about R (some of which reflect my personal opinion):
 
 - R is open source (which means not only free as in beer, but also free as in speech).
 - R is cross-platform (it runs on Windows, macOS, and Linux).
 - R is extremely popular for data analysis and statistics applications.
-- Contrary to what you might have heard, R is relatively easy to learn (at least the basics).
+- R is relatively easy to learn (at least the basics).
 - R has first-class vectors, matrices, tables, and lists.
 - A large number of third-party packages provide a wide array of additional functionality.
 - R encourages reproducible research.
 - R includes helpful documentation.
 - The R community is helpful, friendly, and inclusive.
 
-We interact with R by typing text commands or running scripts in the so-called *R console*. This means that performing data analysis does not involve an interactive graphical user interface, where we typically perform most actions with the mouse. At first, this may sound a bit old-fashioned, but this is really one of the best features of R. After all, writing R commands (and saving them in a script) makes the whole data analysis pipeline reproducible and reusable.
+We interact with R by typing text commands or running scripts in the so-called *R console*. This means that performing data analysis does not involve an interactive graphical user interface, where we typically perform most actions with the mouse. At first, this may sound a bit old-fashioned, but this is really one of the best features of R. In fact, writing R commands (and saving them in a script) makes the whole data analysis pipeline reproducible and reusable.
 
 So far, we have talked about R without seeing what the language actually looks like. Here's a sneak peak at what you will be able to understand after completing this course (gray boxes contain R commands, and white boxes show corresponding results returned by R):
 
@@ -61,9 +61,9 @@ plot(x, y, pch=20)
 
 ## Installation
 
-The [official R website](https://www.r-project.org/) is a great resource for everything related to R. In particular, you can download an R installer for your platform of choice ("Download" – "CRAN" at the top of the left column). The actual download is hidden beneath a cascade of hyperlinks, but eventually you will arrive at the installer for the selected platform. Download and install it (leave all settings at their defaults), and after a couple of seconds you have a working R installation on your computer. Note that it is usually a good idea to always use the latest version of R (4.3.2 at the time of writing this document), so you might want to check the R website for updates once in a while.
+The [official R website](https://www.r-project.org/) is a great resource for everything related to R. In particular, you can download an R installer for your platform of choice ("Download" – "CRAN" at the top of the left column). The actual download is hidden beneath a cascade of links, but eventually you will arrive at the installer for the selected platform. Download and install it (leave all settings at their defaults), and after a couple of seconds you have a working R installation on your computer. Note that it is usually a good idea to always use the latest version of R (4.5.2 at the time of writing this document), so you might want to check the R website for updates once in a while.
 
-R is modular and consists of a core programming language and a basic graphical user interface (GUI). Although the GUI shipped with any R installation is perfectly fine, most people prefer the alternative R GUI called [RStudio](https://posit.co/download/rstudio-desktop/). Therefore, after installing R, you should head to the RStudio website and download and install the latest RStudio version (2023.09.1 at the time of writing).
+R is modular and consists of a core programming language and an optional basic integrated development environment (IDE). Although this IDE is perfectly fine, most people prefer a more powerful alternative called [RStudio](https://posit.co/download/rstudio-desktop/). Therefore, after installing R, you should head to the RStudio website and download and install the latest RStudio version (2025.09.2 at the time of writing).
 
 
 ## First steps
@@ -129,7 +129,7 @@ exp(1)
 
 ### Order of operations
 
-Finally, R knows the correct order of operations and is able to deal with parentheses ([PEMDAS](https://en.wikipedia.org/wiki/Order_of_operations#Mnemonics)):
+R knows the correct order of operations and is able to deal with parentheses ([PEMDAS](https://en.wikipedia.org/wiki/Order_of_operations#Mnemonics)):
 
 ```{r}
 (13 + 6) * 8 - 12**2 / (2.5 + 1.6)
@@ -142,7 +142,7 @@ Note that R accepts only regular parentheses (and not square or curly brackets),
 ```
 
 :::{.callout-note}
-Bear in mind that decimal numbers use a *point* as decimal separator and not a comma, even if you are using German as your primary computer language!
+Bear in mind that decimal numbers use a *point* as a decimal separator and not a comma, even if you are using German as your primary computer language!
 :::
 
 
