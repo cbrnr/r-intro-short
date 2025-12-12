@@ -2,7 +2,7 @@
 title: "8 – Plots"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2024-12-16
+date: 2025-12-15
 format:
   html:
     page-layout: full
@@ -106,7 +106,7 @@ hist(airquality$Ozone)
 A histogram visualizes the distribution of the values in a vector. You can explicitly set the number of bins in the histogram with the `breaks` argument:
 
 ```{r}
-hist(airquality$Ozone, breaks=4)
+hist(airquality$Ozone, breaks=30)
 ```
 
 :::{.callout-note}
@@ -125,7 +125,7 @@ boxplot(airquality$Temp)
 A single boxplot is relatively uninformative. If you pass a formula instead of a vector, you can create multiple boxplots in a single graph.
 
 :::{.callout-note}
-A formula in R is defined by the tilde character (`~`) with expressions on its left and right sides. An example of a formula is `y ~ x` with `y` on the left side and `x` on the right side. The meaning of a formula depends on the specific function. Many functions require formulas as arguments, and we will use formulas extensively when calculating linear models.
+A *formula* in R is defined by the tilde character (`~`) with expressions on its left and right sides. An example of a formula is `y ~ x` with `y` on the left side and `x` on the right side. The meaning of a formula depends on the specific function. Many functions require formulas as arguments, and we will use formulas extensively when calculating linear models.
 :::
 
 The following example creates boxplots for `airquality$Temp` separately for all levels of `airquality$Month`:
@@ -392,6 +392,28 @@ After creating the plot, you should reset the parameter, either as shown above w
 ```{r}
 layout(1)
 ```
+
+
+## Extending base plotting with `tinyplot`
+
+The base plotting system is a powerful tool, but it can feel a bit clunky at times. If you want to add more advanced features to your plots, consider using the [`tinyplot`](https://github.com/grantmcdermott/tinyplot) package. It is designed as a drop-in replacement with no additional dependencies, and it allows you to create more complex plots with less code. For example, the scatter plot with regression line from above can be created as follows:
+
+```{r}
+library(tinyplot)
+
+tinytheme("minimal")  # optionally set a theme
+
+plt(
+    Ozone ~ Wind,
+    data=airquality,
+    alpha=0.5,
+    main="Ozone and Wind in NYC",
+    sub="May–September 1973"
+)
+plt_add(type="lm", col="blue", lwd=2)
+```
+
+See the [tinyplot documentation](https://grantmcdermott.com/tinyplot/index.html) for more information and examples.
 
 
 ## Exercises
