@@ -2,7 +2,7 @@
 title: "2 – The R Environment"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2024-12-16
+date: 2025-12-15
 format:
   html:
     page-layout: full
@@ -29,7 +29,7 @@ RStudio comprises four main regions in its main window (which can be customized 
 
 ![](rstudio.png)
 
-We have already used the R console – that's where R is lurking in the background waiting for our commands. We will soon see that we can collect and store R commands in a so-called R script (a text file). That's when we need the editor part in RStudio. We will also talk about the other components – let's start with package management (make sure to switch to the *Packages* tab in the lower right pane).
+We have already used the R console – that's where R is lurking in the background waiting for our commands. We will soon see that we can collect and store R commands in a so-called *R script* (a text file). That's when we need the editor part in RStudio. We will also talk about the other components – let's start with package management (make sure to switch to the *Packages* tab in the lower right pane).
 
 
 ## Packages
@@ -116,7 +116,7 @@ If a script uses functions from packages, it is necessary to activate all corres
 Never include `install.packages("package")` in your script, because you do not want to install the package every time you run the script! Instead, manually install all required packages either in the Package tab in RStudio or from the console.
 :::
 
-One final note for Windows users: make sure to select UTF-8 as the default encoding for scripts (macOS and Linux already use this encoding by default). Open the RStudio preferences, navigate to "Code" – "Saving", and select UTF-8 in the field "Default text encoding" (by clicking on "Change..."):
+One final note for Windows users: Make sure to select UTF-8 as the default encoding for scripts (macOS and Linux already use this encoding by default). Open the RStudio preferences, navigate to "Code" – "Saving", and select UTF-8 in the field "Default text encoding" (by clicking on "Change..."):
 
 ![](encoding.png)
 
@@ -130,22 +130,22 @@ getwd()
 ```
 
 :::{.callout-tip}
-RStudio also shows the current working directory right below the console title (usually, this is `~/` initially, which is short for your home directory).
+RStudio also shows the current working directory right below the console title (usually, this is `~/` initially, which is shorthand for your home directory).
 :::
 
 The contents of the working directory (files and subdirectories) is shown in the *Files* tab in the lower right part of RStudio. Alternatively, the `dir()` command also lists the working directory contents in the console.
 
-The working directory enables R to load data by specifying only the file name (instead of the full path). Therefore, it is good practice to put scripts and data files into a common directory tree and set the working directory to point to this location before running the script.
+The working directory enables R to load data by specifying only the file name or a relative path (instead of the full absolute path). Therefore, it is good practice to put scripts and data files into a common directory tree and set the working directory to point to this location before running the script.
 
 The command `setwd("path/to/working/directory")` sets the working directory to the path specified in quotes (in this example, the new working directory would be `path/to/working/directory`)[^1]. Alternatively, RStudio offers three shortcuts to set the working directory:
 
 [^1]: Note that paths should always use slashes `/` as separators, even on Windows (which normally uses backslashes `\`).
 
-1. "Session" – "Set Working Directory" (and then any of the three options).
+1. Use the "Session" – "Set Working Directory" menu entry (and then any of the three options).
 2. Navigate to the desired directory in the *Files* pane and click on "More" – "Set As Working Directory".
 3. In the editor, right-click on the name tab of an open script and select "Set Working Directory".
 
-In summary, it is important to set the working directory to the desired location before sourcing an R script. In addition, do not include any `setwd` commands in your script, because this prevents other people from running the script (mainly because in general they will not have the same directories on their computers that you have).
+In summary, it is important to set the working directory to the desired location before sourcing an R script. In addition, do not include any `setwd` commands in your script, because this prevents other people from running the script (mainly because in general they will not have the same directories on their computers that you have). It is the user's responsibility to set the working directory correctly before running a script.
 
 
 ### Workspace or environment
@@ -176,7 +176,7 @@ This example demonstrates the basic R syntax (language rules). First of all, the
 
 #### Comments
 
-R ignores everything after a `#` character (until the end of the line). This is how we write comments that explain our code. Do not underestimate the importance of comments – they exist to help you (or other people) understand the code long after you've written it. If nothing else, write comments for your future self. You will thank yourself later! Note that good comments explain the *why* and not the *how* (the latter should be clear by reading the code).
+R ignores everything after a `#` character (until the end of the line). This is how we write *comments* to explain our code. Do not underestimate the importance of comments – they exist to help you (or other people) understand the code long after you've written it. If nothing else, write comments for your future self! Note that good comments explain the *why* and not the *how* (the latter should be clear by reading the code).
 
 
 #### Variables and objects
@@ -192,9 +192,9 @@ Variable names are case-sensitive (so `n` is different from `N`). Names can cont
 
 #### Functions
 
-Informally, a function is a "mini" script that we can run by *calling* the function. In our example, we call the function `sum` using `sum(x)`.
+Informally, a *function* is a "mini" script that we can run by *calling* the function. In our example, we call the function `sum` using `sum(x)`.
 
-A function call consists of the function name and a pair of parentheses `()`. Inside the parentheses, we can provide arguments – additional information that the function might need to work properly. In the function call `sum(x)`, we pass exactly one argument (the variable `x`, which contains a bunch of numbers that the function sums up). Note that even if you do not supply any arguments, you still need to include the parentheses. Functions that work without arguments include `getwd()`, `library()`, and `ls()`. Some functions also take multiple arguments, for example the function call `sum(1, 2, 3)` has three arguments (separated by commas).
+A function call consists of the function name and a pair of parentheses `()`. Inside the parentheses, we can provide *arguments* – additional information that the function needs to work properly. In the function call `sum(x)`, we pass exactly one argument (the variable `x`, which contains a bunch of numbers that the function sums up). Note that even if you do not supply any arguments, you still need to include the parentheses. Functions that work without arguments include `getwd()`, `library()`, and `ls()`. Some functions also take multiple arguments, for example the function call `sum(1, 2, 3)` has three arguments (separated by commas).
 
 Importantly, functions can also return a value (the result). For instance, calling `sum(1, 2, 3)` returns the value `6` as its result.
 
@@ -244,11 +244,11 @@ The "Description" section contains a slightly more detailed summary of what the 
 sum(..., ra.rm = FALSE)
 ```
 
-We already know that we have to write the function name followed by a pair of parentheses. In addition, this section also tells us which arguments we can pass – in this case, there are two possible arguments (`...` and `na.rm`). The second argument `na.rm` has a default value of `FALSE`, which means that if we do not pass a second argument in our function call, `na.rm` automatically gets its default value of `FALSE`.
+We already know that we have to write the function name followed by a pair of parentheses. In addition, this section also tells us which *arguments* we can (and must) pass – in this case, there are two possible arguments (`...` and `na.rm`). The second argument `na.rm` has a default value of `FALSE`, which means that if we do not pass a second argument in our function call, `na.rm` automatically gets its default value of `FALSE`.
 
 More details on each argument are listed in the subsequent "Arguments" section. In this example, we learn that `...` should be "numeric or complex or logical vectors" (we'll learn about vectors soon).
 
-The next section contains a very detailed description of the function. If you want to understand what is going on when you call the function, you need to read this.
+The next section contains a detailed description of the function. If you want to understand what is going on when you call the function, you need to read this section carefully.
 
 The "Value" section tells us what the function returns (what it computes). Often, the help text includes some useful references such as books or articles. Many functions also include a "See Also" section, which lists similar and related functions.
 
@@ -269,15 +269,15 @@ We learn that this function computes the arithmetic mean, and we can use it like
 mean(x, trim = 0, na.rm = FALSE, ...)
 ```
 
-The first parameter `x` is a (numeric) vector containing the numbers we want to average. The next two parameters (`trim` and `na.rm`) both have default values, so we don't need to specify values if we are happy with the defaults. The fourth parameter `...` summarizes "further arguments" that are not really explained.
+The first parameter `x` is a (numeric) vector containing the numbers we want to average. We must always provide this argument when calling the function, because it has no default value. The next two parameters (`trim` and `na.rm`) both have default values, so we don't need to specify values if we are happy with the defaults. The fourth parameter `...` summarizes "further arguments" that are not really explained.
 
 :::{.callout-note}
 Function parameters and arguments are often used synonymously, but there is a difference: a *parameter* is formally defined in the function header, and when we *call* a function, we pass *arguments* that replace parameters with *specific values*.
 
-For example, the `mean()` function has several parameters, and the first parameter is called `x`. When we call the function using `mean(1:10)`, we pass the argument `1:10`, which is used instead of `x` everywhere inside the function to compute the mean.
+For example, the `mean()` function has several parameters, and the first parameter is called `x`. When we call the function using `mean(1:10)`, we pass the argument `1:10`, which is used instead of `x` everywhere inside the function to compute the mean. You can think of parameters as *placeholders* and arguments as the *actual values* that replace these placeholders when calling a function.
 :::
 
-Let's try some examples to see the different ways we can call the `mean()` function. Let's assume we have a numeric vector (a collection of numbers) stored in the variable `numbers`:
+Let's try some examples to see the different ways we can call the `mean()` function. Let's assume we have a numeric vector (a collection of numbers, more on that in the next chapter) stored in the variable `numbers`:
 
 ```{r}
 numbers = c(1, 8, 17, -6, 5.5, -12.2)
@@ -313,7 +313,7 @@ mean(trim=0.25, x=numbers)
 - [Discovering Statistics Using R](https://uk.sagepub.com/en-gb/eur/discovering-statistics-using-r/book236067)
 - [OpenIntro Statistics](https://www.openintro.org/book/os/)
 - [Learning Statistics With R](https://learningstatisticswithr.com/)
-- [R for Data Science](https://r4ds.had.co.nz/)
+- [R for Data Science](https://r4ds.hadley.nz)
 - [Advanced R](https://adv-r.hadley.nz/)
 
 
@@ -364,4 +364,4 @@ mean(trim=0.25, x=numbers)
 
    - How many required arguments to we need to pass when calling the function?
    - How many optional arguments does the function have?
-   - What does the function call `sum()` (no arguments) do and why (compare with the function call `mean()`)?
+   - What does the function call `sum()` (no arguments) do (compare with the function call `mean()`)?
