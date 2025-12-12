@@ -2,7 +2,7 @@
 title: "4 – Tables"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2024-12-16
+date: 2025-12-15
 format:
   html:
     page-layout: full
@@ -20,14 +20,14 @@ theme:
 
 ## Introduction
 
-Vectors represent one-dimensional data such as a sequence of numbers. In practice, data is often available as a table consisting of two dimensions (rows and columns). R features two data types suitable to represent tabular data: `matrix` (or more generally `array`) and `data.frame`. Whereas a `matrix` is basically just a slightly enhanced vector (remember that all elements must have the same data type), data frames are more versatile, because they can hold columns with different data types.
+Vectors represent *one-dimensional* data such as sequences of numbers. In practice, data is often available as a table consisting of two dimensions (rows and columns). R includes two data types suitable to represent tabular data: `matrix` (or more generally `array`) and `data.frame`. Whereas a `matrix` is basically just a slightly enhanced vector (remember that all elements must have the same data type), data frames are more versatile, because they can hold columns with different data types.
 
 
 ## Matrix
 
 ### Relationship to vectors
 
-Matrices are vectors with a special dimension attribute. We can access this attribute with the `dim()` function:
+Matrices are just vectors with a special dimension attribute. We can access this attribute with the `dim()` function:
 
 ```{r}
 (v = 1:20)
@@ -106,7 +106,9 @@ subjects = c("Joe", "Tracy", "Steven", "Chloe")
 cbind(subjects, m)
 ```
 
-This example also demonstrates the use of `cbind()`, which binds matrices or vectors by columns (in the previous example, we combine the vector `subjects` with the matrix `m` to a new larger matrix). Analogously, `rbind()` combines matrices or vectors by rows.
+::: {.callout-tip}
+This example also demonstrates the use of `cbind()`, which binds matrices or vectors by *columns* (in the previous example, we combine the vector `subjects` with the matrix `m` to a new larger matrix). Analogously, `rbind()` combines matrices or vectors by *rows*.
+:::
 
 
 ### Working with matrices
@@ -120,15 +122,15 @@ rowMeans(m)
 colMeans(m)
 ```
 
-A matrix is most useful for purely numerical data. Since matrices are vectors, they can only accommodate elements of the same data type. In practice, we often need to deal with variables of different types, and this is where data frames really shine.
+A matrix is most useful for purely numerical data. In practice, however, we often need to deal with variables of different types, and this is where data frames really shine.
 
 
 ## Data frames
 
-Like matrices, data frames are two-dimensional data structures consisting of rows and columns. In contrast to a matrix, a data frame can contain columns of different data types. For example, a data frame can consist of a numerical columns, character columns, categorical columns, and so on. We can think of a data frame as a collection of columns, where each column is represented by a vector.
+Like matrices, data frames are two-dimensional data structures consisting of rows and columns. In contrast to a matrix, a data frame can contain columns of different data types. For example, a data frame can consist of numerical columns, character columns, categorical columns, and so on. We can think of a data frame as a collection of columns, where each column is represented by a vector.
 
 :::{.callout-note}
-Technically, data frames are lists of vectors, where each vector corresponds to a column. We will not cover lists in this course and focus only on data frames instead.
+Technically, data frames are *lists of vectors*, where each vector corresponds to a column. We will not cover lists in this course and focus only on data frames instead.
 :::
 
 
@@ -156,7 +158,9 @@ colnames(df) = c("patient", "age", "weight", "bp", "rating", "test")
 df
 ```
 
-Although `rownames()` works with data frames, renaming rows is rarely ever needed and should be avoided.
+::: {.callout-note}
+Although `rownames()` works with data frames, renaming rows is rarely ever needed and should be avoided. The default row names (1, 2, 3, ...) are usually sufficient.
+:::
 
 
 ### Printing data frames
@@ -202,7 +206,7 @@ df$patient
 df$weight
 ```
 
-Note that the result is a vector (because columns in a data frame are vectors).
+Note that the result is a vector (because columns in a data frame are literally vectors).
 
 This syntax also works for adding new columns. For example, we can add a new column called `new` as follows:
 
@@ -231,7 +235,7 @@ df[["height"]]
 ```
 :::
 
-If we would like to access a subset of the data frame consisting of arbitrary rows and columns, we use indexing within square brackets. Similar to matrices, we need to provide both row and column indexes (separated by a comma). Omitting the row or column index implies all elements in that dimension are implicitly selected. The following examples show how to grab entire rows of a data frame:
+If we would like to access a subset of the data frame consisting of arbitrary rows and columns, we use indexing within square brackets. Similar to matrices, we need to provide both row and column indexes (separated by a comma). Omitting the row or column index implies that all elements in that dimension are implicitly selected. The following examples show how to grab entire rows of a data frame:
 
 ```{r}
 df[1,]
