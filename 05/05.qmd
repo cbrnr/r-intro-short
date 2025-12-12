@@ -2,7 +2,7 @@
 title: "5 – Importing data"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2024-12-16
+date: 2025-12-15
 format:
   html:
     page-layout: full
@@ -25,7 +25,7 @@ Data is stored in a wide variety of file formats, such as Excel spreadsheets, SP
 Several key properties make plain text files a popular choice for storing data:
 
 - The format is simple and human-readable, which means that we can access the data by opening it with any text editor.
-- Plain text files are supported by almost every data processing tool and programming language (including R).
+- Plain text files are supported by almost every data processing tool and programming language (including R of course).
 - Changes can be efficiently tracked by version control systems such as Git.
 
 We will discuss importing plain text files (as well as Excel and SPSS files) into R as well as exporting data frames to plain text files in the following sections.
@@ -46,16 +46,16 @@ library(readr)
 ```
 
 :::{.callout-important}
-Functions for importing text data from the `readr` package all start with `read_`, whereas functions that come with R start with `read.`.
+Functions for importing text data from the `readr` package all start with `read_`, whereas functions that come with base R start with `read.`.
 :::
 
 The key function in the `readr` package is `read_delim()`, which lets you adjust many parameters to match the file you want to import, such as the column separator, presence of a header row, comments, or missing values. For comma-separated data, there is the wrapper function `read_csv()`, which uses reasonable default settings. For tab-separated data, you can use `read_tsv()`. There is also `read_csv2()`, which is specifically designed for semicolon-separated data and uses a comma as the decimal separator. However, the `read_delim()` function can handle all of these cases with the appropriate arguments.
 
 :::{.callout-note}
-These "wrapper functions" are essentially just calling `read_delim()` with specific arguments.
+These "wrapper functions" are essentially just calling `read_delim()` with specific arguments under the hood.
 :::
 
-As an example, let's look at a text file called [`lecturer.csv`](lecturer.csv). If you don't know how the data in a text file is actually formatted, you can open its contents in the RStudio editor with the `file.show()` function:
+As an example, let's look at a text file called [`lecturer.csv`](lecturer.csv). If you don't know how the data in a text file is actually formatted, you can open its contents in the RStudio editor with the `file.show()` function (of course, you can also open the file with any text editor outside of R):
 
 ```r
 file.show("lecturer.csv")
@@ -75,7 +75,7 @@ Mark,5/20/1973,2,12,17,10000,14
 Zoe,11/12/1984,2,17,18,10,13
 ```
 
-You can see that in this specific file, the columns are indeed separated by commas (so the `.csv` extension matches the content). The first row is a header row with column names.
+You can see that in this specific file, the columns are indeed separated by commas (so the `.csv` extension matches the content). The first row is a header row with column names, the remaining rows contain the actual data.
 
 The `read_delim()` function usually recognizes the column separator automatically, so you only need to pass the file name as an argument:
 
@@ -84,7 +84,7 @@ The `read_delim()` function usually recognizes the column separator automaticall
 read_delim("lecturer.csv")
 ```
 
-If the automatic detection fails, you can explicitly pass the separator with the `delim` argument:
+If the automatic detection fails, or to be explicit (which is often safer and a good practice), you can pass the separator with the `delim` argument:
 
 ```{r}
 #| message: false
@@ -112,10 +112,10 @@ read_delim("lecturer.dat", delim="\t")
 read_tsv("lecturer.dat")
 ```
 
-Another important feature of such text files is the decimal separator for numbers. In English, we use a period for decimals (e.g., `12.3` or `3.1415`), whereas in German, we use a comma (e.g., `12,3` or `3,1415`). You can specify the decimal separator in `read_delim()` using the `locale` argument, which defaults to a period (as in `read_csv()` and `read_tsv()`). When numbers follow German notation, commas cannot also separate columns, so semicolons are typically used. For such files, set `delim=";"` and `locale=locale(decimal_mark=",")`, or use the `read_csv2()` wrapper, which assumes semicolons and commas as defaults.
+Another important property of such text files is the decimal separator for numbers. In English, we use a dot for decimals (e.g., `12.3` or `3.1415`), whereas in German, we use a comma (e.g., `12,3` or `3,1415`). You can specify the decimal separator in `read_delim()` using the `locale` argument, which defaults to a dot (as in `read_csv()` and `read_tsv()`). When numbers follow German notation, commas cannot also separate columns, so semicolons are typically used. For such files, set `delim=";"` and `locale=locale(decimal_mark=",")`, or use the `read_csv2()` wrapper, which assumes semicolons and commas as defaults.
 
 :::{.callout-important}
-Regardless of how decimal separators are represented in text files, R always uses a *period* for decimal numbers!
+Regardless of how decimal separators are represented in text files, R *always* uses a *dot* for decimal numbers!
 :::
 
 
@@ -150,14 +150,14 @@ To import data, you can click on the desired file in the *Files* view in the low
 
 ## Data preparation
 
-Regardless of the file format, the data ultimately ends up in a data frame (or tibble), which we can then use in R. In most cases, the data frame will still need to be processed so that each column is in the desired format. Let's look at our example data:
+Regardless of the file format, the data ultimately ends up in a data frame (or tibble), which we can then use in R. In most cases, the data frame will still need to be processed so that each column is available in the desired format. Let's look at our example data:
 
 ```{r}
 #| message: false
 (df = read_csv("lecturer.csv"))
 ```
 
-Apparently, all numerical values were correctly recognized as numbers (the abbreviation `<dbl>` means "double" and corresponds to decimal numbers, i.e., a numerical vector). However, the third column `job` has only two values, which actually represent two different professions (`1` stands for "Lecturer", `2` for "Student"). Here, a categorical column (a factor, more on this later) would be better suited than a numerical one. The first column `name` was correctly recognized as `chr` (character vector). The second column `birth_date` was also recognized as a character vector, but there is a specific data type for date values in R (which allows calculations with such values) that we should prefer.
+Apparently, all numerical values were correctly recognized as numbers (the abbreviation `<dbl>` means "double" and corresponds to decimal numbers, i.e., a numerical vector). However, the third column `job` has only two values, which actually represent two different professions (`1` stands for "Lecturer", `2` for "Student"). Here, a categorical type (a factor, more on this later) would be better suited than a numerical one. The first column `name` was correctly recognized as `chr` (character vector). The second column `birth_date` was also recognized as a character vector, but there is a specific data type for date values in R (which allows calculations with such values) that we should prefer.
 
 
 ### Factors
@@ -193,7 +193,7 @@ df$birth_date = as.Date(df$birth_date, format="%m/%d/%Y")
 df
 ```
 
-In this example, the `format` argument `"%m/%d/%Y"` indicates that the dates are originally in the month/day/year order, separated by `/`. Here, `%m` represents the month, `%d` the day, and `%Y` a *four-digit* year.
+In this example, the `format` argument `"%m/%d/%Y"` indicates that the dates are originally in the month/day/year order, separated by `/`. Here, `%m` represents the month, `%d` the day, and `%Y` a four-digit year.
 
 Let's consider another example. Assume we have the following character vector `dates` with date values:
 
