@@ -2,7 +2,7 @@
 title: "3 – Vectors"
 subtitle: "Introduction to R"
 author: "Clemens Brunner"
-date: 2024-12-16
+date: 2025-12-15
 format:
   html:
     page-layout: full
@@ -20,7 +20,7 @@ theme:
 
 ## Creating vectors
 
-A vector is a collection of elements. Importantly, vectors are *atomic* data types in R – that is, a vector is the most basic data type in R, and even a single number is represented as a vector. We can use the function `c()` (combine, concatenate) to create a vector consisting of multiple elements:
+A vector is a collection of elements. Importantly, vectors are *atomic* data types in R – that is, a vector is the most basic data type in R, and even a single number is represented as a vector. We can use the function `c()` ("combine", "concatenate") to create a vector consisting of multiple elements:
 
 ```{r}
 (y = c(1, 2, 3.1415, -100))
@@ -59,7 +59,7 @@ In this example, we pass four arguments to the function: `666`, `y` (itself a ve
 
 ## Types
 
-A vector is a homogenous data structure, which means that it consists of elements of the same type. We have already seen numeric vectors (where all elements are numbers), but R has several other types of vectors. In addition to numeric vectors, we will often work with logical vectors and character vectors (later on, we will also see factors and datetime vectors).
+A vector is a *homogeneous* data structure, which means that it consists of elements of the same type. We have already seen numeric vectors (where all elements are numbers), but R has several other types of vectors. In addition to numeric vectors, we will often work with logical vectors and character vectors (later on, we will also see factors and datetime vectors).
 
 Let's discuss each vector type in turn.
 
@@ -100,6 +100,11 @@ Logical vectors are one of the most frequently used vector types in R, because t
 x = c(0.5, 55, -10, 6)  # numeric vector
 class(x)
 x < 1  # comparison
+```
+
+As we can see, the comparisons are performed element by element, resulting in a logical vector:
+
+```{r}
 class(x < 1)  # logical vector
 ```
 
@@ -112,7 +117,7 @@ R supports the following comparison operators: `>`, `>=`, `<`, `<=`, `==` (equal
 ```
 
 :::{.callout-important}
-Make sure to use `==` if you want to test for equality and not `=` (which is the assignment operator).
+Make sure to use `==` if you want to test for equality and not `=` (which is the assignment operator)!
 :::
 
 
@@ -137,7 +142,7 @@ nchar(c('Hello', 'world!'))
 
 ## Coercion
 
-Recall that vectors are homogenous data types (all elements have the same type). For example, all elements of a numeric vector are numbers. If we use `c()` to create a vector with different types, R automatically coerces these elements to a vector that can represent them all instead of throwing an error. This means that mixing numbers and characters results in a character vector, and mixing numbers and logicals results in a numeric vector:
+Recall that vectors are homogeneous data types (all elements have the same type). For example, all elements of a numeric vector are numbers. If we use `c()` to create a vector with different types, R automatically *coerces* these elements to a vector that can represent them all instead of throwing an error. This means that mixing numbers and characters results in a *character* vector, and mixing numbers and logicals results in a *numeric* vector:
 
 ```{r}
 (x = c(1, 2.14, "5", 6))
@@ -145,6 +150,10 @@ class(x)
 (y = c(1, TRUE, 2, FALSE, -7))
 class(y)
 ```
+
+::: {.callout-note}
+Did you notice that `TRUE` and `FALSE` were converted to `1` and `0`, respectively? This property of logical values is often used in calculations, and we will see some examples later on.
+:::
 
 There are also functions that explicitly convert a vector into a desired type:
 
@@ -174,7 +183,7 @@ Of course, R can perform calculations with numeric vectors. These operations are
 c(1, 2, 3, 4) * 100 + 2
 ```
 
-We already know the basic arithmetic operators `+`, `-`, `*`, and `/` for addition, subtraction, multiplication, and division. Operators `^` or `**` perform exponentiation (e.g. `5**2` means five to the power of two). Integer division and remainder can be computed with `%/%` and `%%`, respectively. Some additional useful functions that compute mathematical operations include `abs()` (absolute value), `sqrt()` (square root), `log()` (logarithm), and `exp()` (exponential function).
+We already know the basic arithmetic operators `+`, `-`, `*`, and `/` for addition, subtraction, multiplication, and division. The operators `^` or `**` perform exponentiation (e.g. `5**2` means five to the power of two). Integer division and remainder can be computed with `%/%` and `%%`, respectively. Some additional useful functions that compute mathematical operations include `abs()` (absolute value), `sqrt()` (square root), `log()` (logarithm), and `exp()` (exponential function).
 
 
 ### Recycling
@@ -191,7 +200,7 @@ Here, R repeats the elements of the shorter vector to match the length of the lo
 c(1, 2, 1, 2) + c(6, 7, 8, 9)
 ```
 
-This (automatic) process is called recycling, because the shorter vector is recycled to generate a vector that has the same number of elements as the longer vector. In fact, recycling also happens in the example we saw before:
+This (automatic) process is called *recycling*, because the shorter vector is recycled to generate a vector that has the same number of elements as the longer vector. In fact, recycling also happens in the example we saw previously:
 
 ```{r}
 c(1, 2, 3, 4) * 100 + 2
@@ -210,7 +219,7 @@ c(1, 2, 3, 4) + c(0, 10)
 c(1, 2, 3, 4) + c(0, 10, 0, 10)
 ```
 
-If recycling is not possible exactly, because the length of the longer vector is not an integer multiple of the length of the shorter vector, R issues a warning (but recycling still works):
+If the longer vector's length is not an exact multiple of the shorter vector's length, R will still recycle the shorter vector (but will issue a warning):
 
 ```{r}
 c(1, 2, 3, 4, 5) + c(0, 10, 8)
@@ -220,7 +229,7 @@ c(1, 2, 3, 4, 5) + c(0, 10, 8, 0, 10)
 
 ## Creating sequences
 
-Sequences of numbers are frequently needed, so R provides shortcuts to create such vectors using either `:` or the function `seq()`. In both cases, we provide start and stop values, but whereas the step size for a sequence generated by `:` is always one, `seq()` can generate number sequences with arbitrary step sizes.
+Sequences of numbers are frequently needed, so R provides shortcuts to create such vectors using either `:` or the function `seq()`. In both cases, we provide start and stop values, but whereas the step size for a sequence generated by `:` is always *one*, `seq()` can generate number sequences with arbitrary step sizes.
 
 Here are some examples:
 
@@ -243,7 +252,9 @@ The related function `rep()` creates a vector by repeating elements. For example
 rep(0, 90)
 ```
 
-Now we can finally solve the mystery of `[1]` that we see in front of every output: the number in square brackets corresponds to the index (the position in the vector) of the element right next to it. In the example, this means that the first `0` in the first line corresponds to index 1, whereas the first `0` in the second line corresponds to index 59 (the fifty-ninth element in the vector). This is convenient to determine indexes in long vectors without having to count from the first element.
+::: {.callout-tip}
+Now we can finally solve the mystery of `[1]` that we see in front of every output: this number in square brackets corresponds to the index (the position in the vector) of the element right next to it. In the example, this means that the first `0` in the first line corresponds to index 1, whereas the first `0` in the second line corresponds to index 59 (the fifty-ninth element in the vector). This is convenient to determine indexes in long vectors without having to count from the first element.
+:::
 
 The following lines show some additional usage examples of the `rep()` function:
 
@@ -258,19 +269,28 @@ rep(c(0, 1, 2), times=c(10, 10, 10))  # identical to each=10
 
 Very often, we need to extract only specific values from a vector (for example the first 10 elements of a long vector). The position of an element in a vector is called its *index*. R starts counting at 1 (in contrast to many other programming languages that start counting at 0), so the first element has index 1, the second element has index 2, and so on.
 
-Therefore, to extract one element of a vector, we can use square brackets containing the desired index:
+Let's look at an example:
 
 ```{r}
 (x = 1:10)
+```
+
+To extract one element of a vector, we can use square brackets containing the desired index:
+
+```{r}
 x[4]  # fourth element
 ```
 
-We can also index more than one element with a corresponding vector of indexes inside the square brackets:
+We can also extract more than one element with a corresponding vector of indexes inside the square brackets:
 
 ```{r}
 x[1:5]  # elements 1-5
 x[c(1, 4, 8)]  # elements 1, 4, and 8
 ```
+
+::: {.callout-important}
+We use `c()` to create a vector of indexes in the second example. Importantly, `x[1, 4, 8]` would *not* work, since we must provide *a single vector* inside the square brackets!
+:::
 
 Negative indexes mean "all elements *except* those corresponding to negative indexes":
 
@@ -290,7 +310,7 @@ x[x > 5]
 
 ## Named vectors
 
-Optionally, individual elements of a vector can be named, which allows us to access elements not only by index (position), but also by name. We create named vectors by passing argument names and values in the function call to `c()`:
+Optionally, individual elements of a vector can be named, which allows us to access elements not only by index (position), but also by name. We create named vectors by passing argument names along with their values in the function call to `c()`:
 
 ```{r}
 (vect = c(a=11, b=2, c=NA))
@@ -344,6 +364,14 @@ Using logical negation `!`, we can determine all elements that are *not* missing
 !is.na(vect)
 vect[!is.na(vect)]
 ```
+
+::: {.callout-tip}
+We can also use the fact that `TRUE` is interpreted as `1` and `FALSE` as `0` in calculations. Therefore, the sum of a logical vector corresponds to the number of `TRUE` values, and hence the number of missing values in the following example:
+
+```{r}
+sum(is.na(vect))  # number of missing values
+```
+:::
 
 
 ## Exercises
